@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "source": "gyroflow/lens_profiles /Nikon 目录（2026-11-26 亲自打开，文件名节选）",
+  "source_url": "https://github.com/gyroflow/lens_profiles/tree/main/Nikon",
+  "license_note": "上游含 LICENSE 文件，未读取内容，接入前须自查。",
+  "notice": "文件名是真实存在的社区贡献记录，用于佐证「副厂/国产镜头 + 机身」组合并非编造；不代表画质结论，也不含防抖参数。",
+  "sample_filenames": [
+    "Nikon_Z30_16-50 DX__1080p_16by9_1920x1080-59.94fps.json",
+    "Nikon_Z30_DX 16-50__4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z30_Z50-250mm @ 50mm__4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z30_12-28mm @ 12mm__1080p_16by9_1920x1080-29.97fps.json",
+    "Nikon_Z30_24mm 1.7__1080p_16by9_1920x1080-59.94fps.json",
+    "Nikon_Z30_Viltrox 33mm__4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z30_Viltrox 33mm__4k_16by9_3840x2160-29.97fps - AHost7 - 2.json",
+    "Nikon_Z30_viltrox 27mm f1.2__4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z30_TTArtisan AF 272.8__1080p_16by9_1920x1080-119.88fps.json",
+    "Nikon_Z30_Sigma 30mm 1_1.4 DC DN__4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z30_Sigma 56mm_56mm_4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z30_SIGMA 18-35__4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z30_SIGMA 18-35__4k_16by9_3840x2160-29.97fps - zjy - 2.json",
+    "Nikon_Z50_Laowa 9mm F2.8__4k_16by9_3840x2160-29.97fps.json",
+    "Nikon_Z50_Viltrox 13mm f1.4 Z__4k_16by9_3840x2160-25.00fps.json",
+    "Nikon_Z6ii_7Artizan 12mm T2.9__4k_16by9_3840x2160-25.00fps.json",
+    "Nikon_D-750_Nikon 24-120 F4__1080p_16by9_1920x1080-59.94fps.json",
+    "Nikon_D7500_TAMARON 10 24__4k_16by9_3840x2160-29.97fps.json"
+  ],
+  "observed_brands": [
+    "Nikon",
+    "Viltrox 唯卓仕",
+    "TTArtisan 铭匠",
+    "7Artizan 七工匠",
+    "Laowa 老蛙",
+    "Sigma 适马",
+    "Tamron 腾龙",
+    "Samyang 森养"
+  ],
+  "why_it_matters": "用户指出上一版漏了副厂与国产镜头。这里给出可点开的真实证据：这些组合在开源社区里被实际提交过 profile。"
+}

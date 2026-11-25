@@ -1,0 +1,188 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-11-25",
+  "notice": "每条口碑带来源类型 / 利益标注 / 观测日 / 状态 / 复核到期日；outdated 与 disputed 权重为 0，improved 只给低权重。",
+  "status_def": {
+    "current": "现行，按权重生效",
+    "improved": "历史问题已改善，仅低权重，禁止照抄旧结论",
+    "outdated": "已被现实推翻，权重 0",
+    "disputed": "查不到足够证据，权重 0"
+  },
+  "source_types": {
+    "official": {
+      "label": "品牌官方",
+      "default_weight": 0.35,
+      "bias": "王婆卖瓜，倾向只列优点、隐藏缺点",
+      "note": "占比可高，但不可全信；必须标明是厂商自述"
+    },
+    "media": {
+      "label": "权威媒体 / 头部主播",
+      "default_weight": 0.2,
+      "bias": "可能受品牌方、广告商、二手商利益驱动",
+      "note": "敌对媒体放大缺点，友好媒体只夸优点；名气 ≠ 专业度"
+    },
+    "consumer": {
+      "label": "消费者 / 实际使用者",
+      "default_weight": 0.25,
+      "bias": "样本偏个人、易以个别体验泛化",
+      "note": "品牌教育用户有产品周期；设计有的过于超前有的过于落后，使用者叙事能补官方盲区"
+    },
+    "outsider": {
+      "label": "圈外视角",
+      "default_weight": 0.1,
+      "bias": "不懂术语，但能反映社交观感与真实使用门槛",
+      "note": "只看圈内人 = 圈内自嗨"
+    },
+    "measured": {
+      "label": "可复现实测 / 硬规格",
+      "default_weight": 0.4,
+      "bias": "测量条件差异",
+      "note": "可量化，最高权重；但也要标测试条件"
+    }
+  },
+  "reputation": [
+    {
+      "id": "Q01",
+      "claim": "佳能直出肤色讨喜",
+      "brand": "Canon",
+      "source_type": "official",
+      "bias": "厂商调校自述 + 社区口碑",
+      "as_of": "2026-11-25",
+      "status": "current",
+      "review_due": "2027-05-25",
+      "weight": 0.15,
+      "note": "记忆色 / Portrait 照片风格，口碑级，只小额加分"
+    },
+    {
+      "id": "Q02",
+      "claim": "索尼 E 卡口镜头群广、产品线分层全",
+      "brand": "Sony",
+      "source_type": "measured",
+      "bias": "可数规格",
+      "as_of": "2026-11-25",
+      "status": "current",
+      "review_due": "2027-05-25",
+      "weight": 0.2,
+      "note": "第三方镜头数量与 FX/Cinema 分层可核实"
+    },
+    {
+      "id": "Q03",
+      "claim": "全画幅最便宜 = 尼康",
+      "brand": "Nikon",
+      "source_type": "media",
+      "bias": "旧共识被新机型推翻",
+      "as_of": "2026-11-25",
+      "status": "outdated",
+      "review_due": "已作废",
+      "weight": 0.0,
+      "note": "2026-11 全新机最低为佳能 EOS R8；仅二手语境常是尼康老单反。出处见 09 来源记录"
+    },
+    {
+      "id": "Q04",
+      "claim": "松下色彩更好",
+      "brand": "Panasonic",
+      "source_type": "consumer",
+      "bias": "主观审美",
+      "as_of": "2026-11-25",
+      "status": "disputed",
+      "review_due": "2027-02-25",
+      "weight": 0.0,
+      "note": "查不到量化证据；能核实的是视频工具链"
+    },
+    {
+      "id": "Q05",
+      "claim": "港版一定更便宜",
+      "brand": "*",
+      "source_type": "consumer",
+      "bias": "忽略保修与国补",
+      "as_of": "2026-11-25",
+      "status": "outdated",
+      "review_due": "已作废",
+      "weight": 0.0,
+      "note": "厂商税后统一价 + 国补只给国行；佳能中国保修条款已亲自复核"
+    },
+    {
+      "id": "Q06",
+      "claim": "富士胶片模拟是固件内 JPEG 管线",
+      "brand": "Fujifilm",
+      "source_type": "measured",
+      "bias": "厂商规格可复现",
+      "as_of": "2026-11-25",
+      "status": "current",
+      "review_due": "2027-05-25",
+      "weight": 0.25,
+      "note": "约 20 种、不影响 RAW，属硬事实"
+    },
+    {
+      "id": "Q07",
+      "claim": "副厂镜头素质普遍不如原厂",
+      "brand": "Tamron/Sigma",
+      "source_type": "media",
+      "bias": "旧世代经验",
+      "as_of": "2026-11-25",
+      "status": "improved",
+      "review_due": "2027-05-25",
+      "weight": 0.05,
+      "note": "腾龙/适马近年多支镜头已达 A- 档；曾经成立，现在不能照抄"
+    },
+    {
+      "id": "Q08",
+      "claim": "国产镜头只能玩玩",
+      "brand": "Viltrox/Laowa/7artisans",
+      "source_type": "media",
+      "bias": "品牌歧视式旧标签",
+      "as_of": "2026-11-25",
+      "status": "improved",
+      "review_due": "2027-05-25",
+      "weight": 0.05,
+      "note": "维卓仕自动对焦 F1.2、老蛙特殊规格已可用；曾经有问题≠现在还在错"
+    },
+    {
+      "id": "Q09",
+      "claim": "半画幅顶配只有富士 / 索尼",
+      "brand": "*",
+      "source_type": "media",
+      "bias": "列举不全",
+      "as_of": "2026-11-25",
+      "status": "outdated",
+      "review_due": "已作废",
+      "weight": 0.0,
+      "note": "漏了佳能 EOS R7"
+    },
+    {
+      "id": "Q10",
+      "claim": "一英寸底一定优于略小底",
+      "brand": "*",
+      "source_type": "media",
+      "bias": "22/23 年阶段性共识",
+      "as_of": "2023-06-01",
+      "status": "outdated",
+      "review_due": "已作废",
+      "weight": 0.0,
+      "note": "25/26 手机纷纷选略小底 + 可变光圈/一镜双目/RYYB/计算摄影，换动态范围与帧率；用户口述例证，未独立核实"
+    }
+  ],
+  "cross_domain_lessons": {
+    "notice": "手机品牌历史问题的教学条目，演示『曾经犯过错 ≠ 现在还在错』。**不参与相机打分**，均为用户口述 / 未核实。",
+    "items": [
+      {
+        "brand": "小米",
+        "issue": "11 系列发热 / 烧 WiFi",
+        "status": "improved",
+        "note": "用户口述：后续机型已改善；要质疑但不能全盘否定"
+      },
+      {
+        "brand": "华为",
+        "issue": "疏油层 / 内存门 / 屏幕门 / 高价低配争议",
+        "status": "improved",
+        "note": "用户口述：早期事件后来未再出现；「现在确实高价低配」属当下评价，与历史问题分开"
+      },
+      {
+        "brand": "OPPO / vivo",
+        "issue": "「厂妹机」标签",
+        "status": "outdated",
+        "note": "用户口述：后来确实变厉害了，标签已过时"
+      }
+    ]
+  }
+}

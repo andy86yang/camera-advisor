@@ -1,0 +1,106 @@
+{
+  "schema_version": "2.0",
+  "notice": "用户自述价格点未经核实，仅用于演示数据结构，禁止用于下单或真实推荐计算。",
+  "sampling_policy": {
+    "frequency": "daily",
+    "not_event_driven": true,
+    "why": "用户口述：50-250 的最大降幅发生在 7/8 月，双 11 双 12 反而无明显变化；只在 618/双 11 抓价会系统性漏掉真实低点",
+    "required_fields": [
+      "date",
+      "price",
+      "price_type",
+      "region",
+      "condition",
+      "origin",
+      "observed_at"
+    ],
+    "retention": "全历史永不覆盖，Git 每次采样自动提交，天然留下价格曲线",
+    "stale_after_days": 7
+  },
+  "series": [
+    {
+      "item": "Nikon Z30 + 16-50 套机",
+      "user_reported": true,
+      "first_launch_price": 4799,
+      "points": [
+        {
+          "date": "2025-11",
+          "price": 3006,
+          "price_type": "final_price",
+          "region": "中国大陆",
+          "condition": "全新",
+          "event": "用户购入",
+          "origin": "用户自述 / 未核实",
+          "observed_at": "2026-11-25"
+        },
+        {
+          "date": "2026-07",
+          "price": null,
+          "price_type": "unknown",
+          "region": "中国大陆",
+          "condition": "全新",
+          "event": "口述提及此期间出现降价，无具体数字",
+          "origin": "用户自述 / 未核实",
+          "observed_at": "2026-11-25"
+        },
+        {
+          "date": "2026-11-11",
+          "price": 3000,
+          "price_type": "final_price",
+          "region": "中国大陆",
+          "condition": "全新",
+          "event": "双 11",
+          "origin": "用户自述 / 未核实",
+          "observed_at": "2026-11-25"
+        }
+      ],
+      "lesson": "出了很多年的老机身仍在缓降，不存在『跌到底』；大促并未给出更低点",
+      "date_uncertainty": "口述时间线有跳跃（部分年月表述不一），此处按口述相对顺序记录，不替用户补全日期"
+    },
+    {
+      "item": "NIKKOR Z DX 50-250mm",
+      "user_reported": true,
+      "first_launch_price": null,
+      "points": [
+        {
+          "date": "2025-03（口述，年份不确定）",
+          "price": 1700,
+          "price_type": "final_price",
+          "region": "中国大陆",
+          "condition": "全新",
+          "event": "用户购入",
+          "origin": "用户自述 / 未核实",
+          "observed_at": "2026-11-25"
+        },
+        {
+          "date": "2026-03（口述）",
+          "price": 1395,
+          "price_type": "final_price",
+          "region": "中国大陆",
+          "condition": "全新",
+          "event": "7/8 月前后降至 1395–1400",
+          "origin": "用户自述 / 未核实",
+          "observed_at": "2026-11-25"
+        },
+        {
+          "date": "2026-11-11",
+          "price": 1400,
+          "price_type": "final_price",
+          "region": "中国大陆",
+          "condition": "全新",
+          "event": "双 11 未见明显变化",
+          "origin": "用户自述 / 未核实",
+          "observed_at": "2026-11-25"
+        }
+      ],
+      "lesson": "降幅发生在非大促月份；双 11 / 双 12 价格几乎不动",
+      "date_uncertainty": "用户口述中出现「27 年三月份」等明显口误，年份以相对顺序推定并标注不确定"
+    }
+  ],
+  "derived_metrics": [
+    "holding_depreciation",
+    "first_launch_premium",
+    "relative_loss_reference_frame"
+  ],
+  "relative_loss_note": "用户口述：一年机身加双套亏约 1000，但『冲首发那些人亏的更多』，所以『不算十分肉疼』——亏损感取决于参照系，引擎应同时给出绝对折旧与相对参照。"
+}

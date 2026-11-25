@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "source": "lensfun/lensfun /data/db/generic.xml（2026-11-26 亲自打开，逐字摘录）",
+  "source_url": "https://github.com/lensfun/lensfun/blob/master/data/db/generic.xml",
+  "license_note": "上游含 COPYING / COPYING.LESSER，接入前须自查许可条款。此处仅作字段结构对照，不含校正数据体。",
+  "notice": "这些是上游真实存在的卡口名与裁切系数，用来校准本项目 sensor/mount 字段；不是本项目自己编的参数。",
+  "mounts": [
+    "Canon EF",
+    "Canon EF-M",
+    "Canon EF-S",
+    "Canon FD",
+    "Fujifilm G",
+    "Fujifilm X",
+    "Leica L",
+    "Leica M",
+    "Micro 4/3 System",
+    "Nikon CX",
+    "Nikon F",
+    "Nikon Z",
+    "Pentax K",
+    "Samsung NX",
+    "Sigma SA",
+    "Sony Alpha",
+    "Sony E",
+    "Tamron Adaptall",
+    "4/3 System"
+  ],
+  "crop_factors": [
+    {
+      "model": "Crop-factor 1.0 (Full Frame)",
+      "cropfactor": 1.0
+    },
+    {
+      "model": "Crop-factor 1.5 (APS-C)",
+      "cropfactor": 1.53
+    },
+    {
+      "model": "Crop-factor 1.6 (APS-C)",
+      "cropfactor": 1.611
+    },
+    {
+      "model": "Crop-factor 2.0 (Four-Thirds)",
+      "cropfactor": 2.0
+    }
+  ]
+}

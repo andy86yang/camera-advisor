@@ -1,0 +1,431 @@
+{
+  "schema_version": "2.0",
+  "reviewed_at": "2026-11-25",
+  "source_doc": "04_选购知识库_规则与证据.md",
+  "evidence_levels": {
+    "A": "可量化硬指标 / 厂商规格，可单独决定推荐",
+    "B": "厂商一手自述 / 官方条款 / 官方访谈，可单独决定但须标明是厂商说法",
+    "C": "2 个以上独立来源共识，仅中等权重",
+    "D": "主观审美 / 口碑，不许单独决定，权重封顶 0.05",
+    "E": "未核实 / 查不到 / 来源冲突，不入库"
+  },
+  "evidence_cap": {
+    "D": 0.05,
+    "E": 0
+  },
+  "scene_labels": {
+    "portrait": "拍人 / 人像",
+    "video": "拍视频 / vlog",
+    "workflow": "搭工作流 / 镜头群 / 以后升级",
+    "film_look": "喜欢胶片质感",
+    "street": "街拍 / 随手拍",
+    "travel": "旅行 / 不想背重的",
+    "wildlife": "打鸟 / 生态 / 长焦",
+    "landscape": "风光 / 高像素"
+  },
+  "attr_labels": {
+    "jpeg_skin_tone": "直出肤色友好",
+    "eye_af": "人眼/主体对焦",
+    "portrait_prime_count": "大光圈人像镜头好买",
+    "ibis_stops": "防抖档数",
+    "log_lut_tools": "机内调色工具(Log/LUT/示波器)",
+    "unlimited_record": "长时间录制不中断",
+    "bit_depth": "10-bit 4:2:2 规格",
+    "audio_io": "专业音频接口",
+    "third_party_lens_breadth": "第三方镜头选择多",
+    "system_tiers": "机身/视频产品线分层全",
+    "film_simulations": "机内胶片模拟",
+    "physical_dials": "物理拨盘操控",
+    "compact_size": "机身小巧",
+    "weight_score": "轻便",
+    "weather_sealing": "防尘防滴",
+    "crop_advantage": "等效长焦效率",
+    "tele_advantage": "长焦镜头轻",
+    "dynamic_range": "动态范围",
+    "megapixels_score": "像素"
+  },
+  "scene_to_attributes": {
+    "portrait": {
+      "jpeg_skin_tone": 1,
+      "eye_af": 0.8,
+      "portrait_prime_count": 0.6
+    },
+    "video": {
+      "ibis_stops": 1,
+      "log_lut_tools": 0.9,
+      "unlimited_record": 0.8,
+      "bit_depth": 0.8,
+      "audio_io": 0.6
+    },
+    "workflow": {
+      "third_party_lens_breadth": 1,
+      "system_tiers": 0.8
+    },
+    "film_look": {
+      "film_simulations": 1,
+      "physical_dials": 0.6
+    },
+    "street": {
+      "film_simulations": 0.9,
+      "compact_size": 0.7,
+      "physical_dials": 0.5
+    },
+    "travel": {
+      "weight_score": 0.9,
+      "weather_sealing": 0.6,
+      "crop_advantage": 0.5
+    },
+    "wildlife": {
+      "crop_advantage": 1,
+      "tele_advantage": 0.8,
+      "ibis_stops": 0.6,
+      "weather_sealing": 0.6
+    },
+    "landscape": {
+      "dynamic_range": 1,
+      "megapixels_score": 0.7,
+      "weather_sealing": 0.6
+    }
+  },
+  "priority_boost": {
+    "ibis": {
+      "label": "防抖",
+      "attr": "ibis_stops",
+      "weight": 0.8
+    },
+    "light": {
+      "label": "轻便",
+      "attr": "weight_score",
+      "weight": 0.8
+    },
+    "af": {
+      "label": "对焦",
+      "attr": "eye_af",
+      "weight": 0.8
+    },
+    "video_spec": {
+      "label": "视频规格",
+      "attr": "bit_depth",
+      "weight": 0.8
+    },
+    "looks": {
+      "label": "颜值 / 操控",
+      "attr": "physical_dials",
+      "weight": 0.8
+    }
+  },
+  "flags": {
+    "jpeg_only": "我基本直出 JPEG，不修图",
+    "accept_used": "能接受二手",
+    "accept_grey": "能接受港版 / 水货",
+    "low_budget": "预算确实紧，优先便宜"
+  },
+  "brand_bonus": [
+    {
+      "id": "R01",
+      "brand": "Canon",
+      "evidence": "C",
+      "weight": 0.15,
+      "requires": [
+        "jpeg_only",
+        "portrait"
+      ],
+      "why": "厂商确有肤色定向调校（记忆色 / Portrait 照片风格），但属口碑级，只小额加分"
+    },
+    {
+      "id": "R02",
+      "brand": "Sony",
+      "evidence": "C",
+      "weight": 0.2,
+      "requires": [
+        "workflow"
+      ],
+      "why": "E 卡口单一卡口覆盖 APS-C/全幅、第三方镜头广、FX/Cinema 分层（DPReview 2023 访谈）"
+    },
+    {
+      "id": "R03",
+      "brand": "Nikon",
+      "evidence": "B",
+      "weight": 0.2,
+      "requires": [
+        "accept_used",
+        "full_frame",
+        "low_budget"
+      ],
+      "why": "二手全幅老单反低价有多源硬数据；注意：全新机语境不成立"
+    },
+    {
+      "id": "R04",
+      "brand": "Panasonic",
+      "evidence": "B",
+      "weight": 0.2,
+      "requires": [
+        "video"
+      ],
+      "why": "视频工具链有厂商一手规格；注意：不含「色彩更好」（该说法无证据）"
+    },
+    {
+      "id": "R06",
+      "brand": "Fujifilm",
+      "evidence": "A",
+      "weight": 0.25,
+      "requires": [
+        "jpeg_only",
+        "film_look"
+      ],
+      "why": "胶片模拟是固件内 JPEG 渲染管线、约 20 种、不影响 RAW（硬事实）"
+    }
+  ],
+  "banned_rules": [
+    "全画幅最便宜 = 尼康（写死品牌）→ 见 04 R07，全新机 2026-11 为佳能",
+    "松下色彩更好 → E 级，已删除",
+    "港版一定更便宜 → E 级，已删除",
+    "尼康 + 港版特别划算 → 无任何独立来源，已删除",
+    "国补一律 15% → 来源口径冲突，禁止硬编码，走资格判定",
+    "APS-C 顶配只有富士/索尼 → 漏了佳能 EOS R7",
+    "任何 D 级口碑规则权重不得超过 0.05；E 级不进本文件",
+    "任何品牌 / 口碑规则不带 as_of 与 status → 违反 P9，禁止入库",
+    "把「曾经有过问题」直接写成「现在不行」→ 经验主义，违反 P9（应标 improved / 待复核）",
+    "只在大促抓价 → 违反 P4，价格观测必须每日持续采样",
+    "用裸参数直接加权、不考虑补偿与输出端 cap → 违反 P5/P6，等同照抄博主公式",
+    "把重量当普通加性小分 → 违反 P7，必须是乘性出勤率因子",
+    "把社交认同偷偷塞进品牌加分 → 违反 P10，必须是用户可调的显式维度"
+  ],
+  "price_rule": "价格只读 prices.json；缺四元组（地域/观测日/价格类型/成色）一律标 unverified；过期按 stale_after_days 降级；任何分支都不许让模型生成价格。",
+  "v2_note": "本文件由 scripts/rebuild_data.py 生成。P1–P11 的方法论出处见 docs/方法论.md。",
+  "compensations": {
+    "_note": "P5：短板不是判决，是可被低成本/零成本手段补偿的量。gain 为有效分增益，cost 为代价。requires 对应问卷里的能力项。",
+    "dynamic_range": [
+      {
+        "means": "拍 RAW 不拍 JPEG",
+        "gain": 0.18,
+        "cost_min": 5,
+        "cost_money": 0,
+        "requires": "can_raw",
+        "note": "用户口述：RAW 可弥补动态范围不足"
+      },
+      {
+        "means": "向右曝光（ETTR）",
+        "gain": 0.1,
+        "cost_min": 3,
+        "cost_money": 0,
+        "requires": "can_raw",
+        "note": "用户口述：向右曝光压噪点"
+      }
+    ],
+    "low_light_noise": [
+      {
+        "means": "锁 ISO 100 / 尽量低 ISO",
+        "gain": 0.15,
+        "cost_min": 1,
+        "cost_money": 0,
+        "requires": "can_raw",
+        "note": "用户口述：强行锁 ISO 100"
+      },
+      {
+        "means": "PS 降噪 / AI 降噪软件",
+        "gain": 0.2,
+        "cost_min": 15,
+        "cost_money": 0,
+        "requires": "willing_post",
+        "note": "用户口述：后期 10–20 分钟可接近全幅效果"
+      },
+      {
+        "means": "超分软件补像素",
+        "gain": 0.12,
+        "cost_min": 10,
+        "cost_money": 0,
+        "requires": "willing_post",
+        "note": "只对静态照片、且输出端未 cap 时才有效"
+      }
+    ],
+    "total_light": [
+      {
+        "means": "大光圈 F1.7 / F1.2 定焦（不用 F2.8 / F1.8）",
+        "gain": 0.25,
+        "cost_min": 0,
+        "cost_money": 1500,
+        "requires": "buy_fast_lens",
+        "note": "用户口述：用 1.7、1.2 补总进光量；成本远低于换全幅"
+      },
+      {
+        "means": "放慢快门 1/200 → 1/120 → 1/80",
+        "gain": 0.1,
+        "cost_min": 0,
+        "cost_money": 0,
+        "requires": "static_subject",
+        "note": "只对静态题材成立，动态会糊"
+      },
+      {
+        "means": "补常亮灯 / 手机手电筒",
+        "gain": 0.08,
+        "cost_min": 2,
+        "cost_money": 0,
+        "requires": "static_subject",
+        "note": "用户口述：零成本补光"
+      }
+    ]
+  },
+  "output_caps": {
+    "_note": "P6：收益由输出端决定。超过 cap 的属性按 over_cap_penalty 折损，天然产生『成本+80% 效果+8%』。",
+    "wechat": {
+      "label": "朋友圈 / 微信群（压到约 100–300KB）",
+      "caps": {
+        "megapixels_score": 0.25,
+        "dynamic_range": 0.55,
+        "bit_depth": 0.2,
+        "ibis_stops": 0.4
+      },
+      "over_cap_penalty": 0.15,
+      "note": "10MB / 20MB 发出来都是 100 多 KB"
+    },
+    "douyin": {
+      "label": "抖音 / 短视频（平台 1080P、手机屏 1080P）",
+      "caps": {
+        "megapixels_score": 0.2,
+        "bit_depth": 0.35,
+        "unlimited_record": 0.5
+      },
+      "over_cap_penalty": 0.15,
+      "note": "4K60 与 1080P60 在 1080P 屏上观感差距小；都是 60 帧；LUT 讨喜反而可能更赢"
+    },
+    "xiaohongshu": {
+      "label": "小红书 / 图文",
+      "caps": {
+        "megapixels_score": 0.45,
+        "dynamic_range": 0.7,
+        "jpeg_skin_tone": 0.9
+      },
+      "over_cap_penalty": 0.1,
+      "note": "调色与直出观感权重上升"
+    },
+    "bilibili": {
+      "label": "B 站 / 4K 交付",
+      "caps": {
+        "bit_depth": 0.95,
+        "unlimited_record": 0.95,
+        "log_lut_tools": 0.95
+      },
+      "over_cap_penalty": 0.05,
+      "note": "此时视频规格才真正值钱"
+    },
+    "print": {
+      "label": "A3 以上打印 / 展览",
+      "caps": {
+        "megapixels_score": 1.0,
+        "dynamic_range": 1.0
+      },
+      "over_cap_penalty": 0.0,
+      "note": "输出端不压缩，像素与动态范围收益不打折"
+    },
+    "commercial": {
+      "label": "商业交付 / 客户要 RAW",
+      "caps": {
+        "megapixels_score": 1.0,
+        "dynamic_range": 1.0,
+        "bit_depth": 1.0
+      },
+      "over_cap_penalty": 0.0,
+      "note": "全流程不 cap，但成本与负重也要全额承担"
+    }
+  },
+  "weight_policy": {
+    "_note": "P7：重量是出勤率的代理变量，作乘性因子，不是普通加性小分。",
+    "baseline_km": 5,
+    "limit_at_20km_g": 700,
+    "carry_exponent": 0.9,
+    "hard_veto_total_g": 900,
+    "hard_veto_when": "徒步 ≥ 15km 且 整套重量 > 900g",
+    "total_weight_rule": "整套重量 = 机身重量 + 该卡口可配到的最轻镜头重量（不是固定标变），否则套机/轻定焦会被误判过重",
+    "reason": "用户口述：爬山十几二十公里，塑料机身镜头轻才愿意带出去；金属合金很沉就不愿意拿；用多了手会得筋膜炎"
+  },
+  "ergonomics_profile": {
+    "_note": "用户画像：个子高→三脚架要大；手小/劲儿小/年纪小→偏轻便。",
+    "fields": [
+      "hand_size",
+      "grip_strength",
+      "age_group",
+      "height_cm",
+      "tendinitis_concern"
+    ],
+    "rules": [
+      {
+        "when": "height_cm >= 180",
+        "advice": "三脚架工作高度建议 ≥ 160cm，否则长期弯腰"
+      },
+      {
+        "when": "hand_size == small or grip_strength == low",
+        "advice": "优先 small grip + 整机 ≤ 550g，避免单手长焦"
+      },
+      {
+        "when": "tendinitis_concern",
+        "advice": "负重上限下调 15%，并优先塑料机身 / 轻定焦"
+      }
+    ]
+  },
+  "secondary_use_offset": {
+    "_note": "P8：有第二用途的机器换机时不必出二手，账面损失不落袋。",
+    "per_use_offset": 0.06,
+    "max_offset": 0.18,
+    "reason": "用户口述：Z30 可作 vlog 机 / 直播副机位，退居二线，不存在因出二手造成的经济损失"
+  },
+  "social": {
+    "_note": "P10：马斯洛除自我认同外还有社交；品牌文化与他人观感是真实需求，作为用户可调显式维度，不偷偷塞进品牌分。",
+    "default_weight": 0.15,
+    "min": 0.0,
+    "max": 0.6,
+    "label": "在意别人怎么看（品牌面子 / 社交认同）",
+    "novice_mode": "小白不认识圈内大佬、不会判断谁恰饭，可信度判断由 AI 代做，界面不暴露权威加权表"
+  },
+  "source_types": {
+    "official": {
+      "label": "品牌官方",
+      "default_weight": 0.35,
+      "bias": "王婆卖瓜，倾向只列优点、隐藏缺点",
+      "note": "占比可高，但不可全信；必须标明是厂商自述"
+    },
+    "media": {
+      "label": "权威媒体 / 头部主播",
+      "default_weight": 0.2,
+      "bias": "可能受品牌方、广告商、二手商利益驱动",
+      "note": "敌对媒体放大缺点，友好媒体只夸优点；名气 ≠ 专业度"
+    },
+    "consumer": {
+      "label": "消费者 / 实际使用者",
+      "default_weight": 0.25,
+      "bias": "样本偏个人、易以个别体验泛化",
+      "note": "品牌教育用户有产品周期；设计有的过于超前有的过于落后，使用者叙事能补官方盲区"
+    },
+    "outsider": {
+      "label": "圈外视角",
+      "default_weight": 0.1,
+      "bias": "不懂术语，但能反映社交观感与真实使用门槛",
+      "note": "只看圈内人 = 圈内自嗨"
+    },
+    "measured": {
+      "label": "可复现实测 / 硬规格",
+      "default_weight": 0.4,
+      "bias": "测量条件差异",
+      "note": "可量化，最高权重；但也要标测试条件"
+    }
+  },
+  "profile_sections": [
+    "主要矛盾",
+    "次要矛盾",
+    "不必纠结（不做全才）"
+  ],
+  "expertise_levels": {
+    "novice": {
+      "label": "小白",
+      "detail": "只给结论与主次矛盾，不列全部属性；可信度由 AI 代判"
+    },
+    "enthusiast": {
+      "label": "爱好者",
+      "detail": "给补偿清单与输出端 cap 说明"
+    },
+    "power": {
+      "label": "发烧友",
+      "detail": "全量逐条可复算打分 + MTF 档 + 来源五分类"
+    }
+  }
+}

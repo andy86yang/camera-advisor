@@ -1,0 +1,38 @@
+name: 每日价格采样（不是只在大促跑）
+
+# 为什么每天跑：作者口述 50-250 镜头的最大降幅发生在 7/8 月，
+# 双 11 / 双 12 反而几乎没有变化。只盯 618 / 双 11 会系统性漏掉真实低点。
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 采集价格（当前为适配器骨架，未接真实源时只做校验与留痕）
+        run: python scripts/fetch_prices.py --dry-run
+
+      - name: 数据自检
+        run: python engine/scoring.py --validate
+
+      - name: 有变化就提交回仓库（Git 天然留下价格曲线）
+        run: |
+          git config user.name "price-bot"
+          git config user.email "price-bot@users.noreply.github.com"
+          git add data/prices.json data/price_history.json
+          if git diff --cached --quiet; then
+            echo "本次无价格变化，不提交。"
+          else
+            git commit -m "chore(prices): daily sample $(date -u +%Y-%m-%d)"
+            git push
+          fi

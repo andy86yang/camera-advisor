@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0",
+  "reviewed_at": "2026-11-25",
+  "source_doc": "04_选购知识库_规则与证据.md",
+  "evidence_levels": {
+    "A": "可量化硬指标 / 厂商规格，可单独决定推荐",
+    "B": "厂商一手自述 / 官方条款 / 官方访谈，可单独决定但须标明是厂商说法",
+    "C": "2 个以上独立来源共识，仅中等权重",
+    "D": "主观审美 / 口碑，不许单独决定，权重封顶 0.05",
+    "E": "未核实 / 查不到 / 来源冲突，不入库"
+  },
+  "evidence_cap": {
+    "D": 0.05,
+    "E": 0
+  },
+  "scene_labels": {
+    "portrait": "拍人 / 人像",
+    "video": "拍视频 / vlog",
+    "workflow": "搭工作流 / 镜头群 / 以后升级",
+    "film_look": "喜欢胶片质感",
+    "street": "街拍 / 随手拍",
+    "travel": "旅行 / 不想背重的",
+    "wildlife": "打鸟 / 生态 / 长焦",
+    "landscape": "风光 / 高像素"
+  },
+  "attr_labels": {
+    "jpeg_skin_tone": "直出肤色友好",
+    "eye_af": "人眼/主体对焦",
+    "portrait_prime_count": "大光圈人像镜头好买",
+    "ibis_stops": "防抖档数",
+    "log_lut_tools": "机内调色工具(Log/LUT/示波器)",
+    "unlimited_record": "长时间录制不中断",
+    "bit_depth": "10-bit 4:2:2 规格",
+    "audio_io": "专业音频接口",
+    "third_party_lens_breadth": "第三方镜头选择多",
+    "system_tiers": "机身/视频产品线分层全",
+    "film_simulations": "机内胶片模拟",
+    "physical_dials": "物理拨盘操控",
+    "compact_size": "机身小巧",
+    "weight_score": "轻便",
+    "weather_sealing": "防尘防滴",
+    "crop_advantage": "等效长焦效率",
+    "tele_advantage": "长焦镜头轻",
+    "dynamic_range": "动态范围",
+    "megapixels_score": "像素"
+  },
+  "scene_to_attributes": {
+    "portrait": {
+      "jpeg_skin_tone": 1,
+      "eye_af": 0.8,
+      "portrait_prime_count": 0.6
+    },
+    "video": {
+      "ibis_stops": 1,
+      "log_lut_tools": 0.9,
+      "unlimited_record": 0.8,
+      "bit_depth": 0.8,
+      "audio_io": 0.6
+    },
+    "workflow": {
+      "third_party_lens_breadth": 1,
+      "system_tiers": 0.8
+    },
+    "film_look": {
+      "film_simulations": 1,
+      "physical_dials": 0.6
+    },
+    "street": {
+      "film_simulations": 0.9,
+      "compact_size": 0.7,
+      "physical_dials": 0.5
+    },
+    "travel": {
+      "weight_score": 0.9,
+      "weather_sealing": 0.6,
+      "crop_advantage": 0.5
+    },
+    "wildlife": {
+      "crop_advantage": 1,
+      "tele_advantage": 0.8,
+      "ibis_stops": 0.6,
+      "weather_sealing": 0.6
+    },
+    "landscape": {
+      "dynamic_range": 1,
+      "megapixels_score": 0.7,
+      "weather_sealing": 0.6
+    }
+  },
+  "priority_boost": {
+    "ibis": {
+      "label": "防抖",
+      "attr": "ibis_stops",
+      "weight": 0.8
+    },
+    "light": {
+      "label": "轻便",
+      "attr": "weight_score",
+      "weight": 0.8
+    },
+    "af": {
+      "label": "对焦",
+      "attr": "eye_af",
+      "weight": 0.8
+    },
+    "video_spec": {
+      "label": "视频规格",
+      "attr": "bit_depth",
+      "weight": 0.8
+    },
+    "looks": {
+      "label": "颜值 / 操控",
+      "attr": "physical_dials",
+      "weight": 0.8
+    }
+  },
+  "flags": {
+    "jpeg_only": "我基本直出 JPEG，不修图",
+    "accept_used": "能接受二手",
+    "accept_grey": "能接受港版 / 水货",
+    "low_budget": "预算确实紧，优先便宜"
+  },
+  "brand_bonus": [
+    {
+      "id": "R01",
+      "brand": "Canon",
+      "evidence": "C",
+      "weight": 0.15,
+      "requires": [
+        "jpeg_only",
+        "portrait"
+      ],
+      "why": "厂商确有肤色定向调校（记忆色 / Portrait 照片风格），但属口碑级，只小额加分"
+    },
+    {
+      "id": "R02",
+      "brand": "Sony",
+      "evidence": "C",
+      "weight": 0.2,
+      "requires": [
+        "workflow"
+      ],
+      "why": "E 卡口单一卡口覆盖 APS-C/全幅、第三方镜头广、FX/Cinema 分层（DPReview 2023 访谈）"
+    },
+    {
+      "id": "R03",
+      "brand": "Nikon",
+      "evidence": "B",
+      "weight": 0.2,
+      "requires": [
+        "accept_used",
+        "full_frame",
+        "low_budget"
+      ],
+      "why": "二手全幅老单反低价有多源硬数据；注意：全新机语境不成立"
+    },
+    {
+      "id": "R04",
+      "brand": "Panasonic",
+      "evidence": "B",
+      "weight": 0.2,
+      "requires": [
+        "video"
+      ],
+      "why": "视频工具链有厂商一手规格；注意：不含「色彩更好」（该说法无证据）"
+    },
+    {
+      "id": "R06",
+      "brand": "Fujifilm",
+      "evidence": "A",
+      "weight": 0.25,
+      "requires": [
+        "jpeg_only",
+        "film_look"
+      ],
+      "why": "胶片模拟是固件内 JPEG 渲染管线、约 20 种、不影响 RAW（硬事实）"
+    }
+  ],
+  "banned_rules": [
+    "全画幅最便宜 = 尼康（写死品牌）→ 见 04 R07，全新机 2026-11 为佳能",
+    "松下色彩更好 → E 级，已删除",
+    "港版一定更便宜 → E 级，已删除",
+    "尼康 + 港版特别划算 → 无任何独立来源，已删除",
+    "国补一律 15% → 来源口径冲突，禁止硬编码，走资格判定",
+    "APS-C 顶配只有富士/索尼 → 漏了佳能 EOS R7",
+    "任何 D 级口碑规则权重不得超过 0.05；E 级不进本文件"
+  ],
+  "price_rule": "价格只读 prices.json；缺四元组（地域/观测日/价格类型/成色）一律标 unverified；过期按 stale_after_days 降级；任何分支都不许让模型生成价格。"
+}

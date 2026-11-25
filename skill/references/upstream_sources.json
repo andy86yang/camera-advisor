@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "verified_at": "2026-11-26",
+  "verified_by": "通过已连接的 GitHub 接口真实调用 search_repositories / get_file_contents",
+  "honesty": "stars 与许可证一律照抄检索返回，未获取就写「未获取」；只列亲自打开过或检索命中的仓库，绝不编造。",
+  "sources": [
+    {
+      "id": "lensfun",
+      "full_name": "lensfun/lensfun",
+      "url": "https://github.com/lensfun/lensfun",
+      "stars": "未获取（未走 star 查询，只核实仓库与文件存在）",
+      "license": "仓库根含 COPYING 与 COPYING.LESSER 两份许可文件（ GPL / LGPL 系）；未逐条读取条款，接入前须自查",
+      "verified_how": "mcp__github__get_file_contents 亲自打开 / 与 /data/db 目录",
+      "files_opened": [
+        "/",
+        "/data/db/lensfun-database.dtd",
+        "/data/db/generic.xml"
+      ],
+      "reused": "从 generic.xml 抽出真实卡口清单与 cropfactor，生成 data/upstream/lensfun_mounts.json；DTD 的 camera/lens/mount/cropfactor 字段结构作为我们数据契约的对照",
+      "not_reused": "未复制其镜头校正 XML 数据体（体积大、许可需自查、且与本项目的选型打分不是同一用途）",
+      "as_of": "2026-11-26"
+    },
+    {
+      "id": "gyroflow_lens_profiles",
+      "full_name": "gyroflow/lens_profiles",
+      "url": "https://github.com/gyroflow/lens_profiles",
+      "stars": 106,
+      "license": "仓库含 LICENSE 文件（未读取内容，接入前须自查）",
+      "verified_how": "search_repositories 命中 + get_file_contents 亲自打开 / 与 /Nikon 目录",
+      "files_opened": [
+        "/",
+        "/Nikon"
+      ],
+      "reused": "从 /Nikon 真实文件名中筛出 Z30 与唯卓仕/七工匠/老蛙/铭匠/适马/腾龙的组合，生成 data/upstream/gyroflow_matched_lenses.json —— 用来证明「副厂国产镜头真实存在且被实际使用」，不是编的",
+      "not_reused": "未复制 profile JSON（那是防抖畸变参数，不是价格或规格）",
+      "as_of": "2026-11-26"
+    },
+    {
+      "id": "darktable",
+      "full_name": "darktable-org/darktable",
+      "url": "https://github.com/darktable-org/darktable",
+      "stars": 13503,
+      "license": "开源摄影工作流 / RAW 显影软件（许可证未读取，接入前须自查）",
+      "verified_how": "search_repositories 命中（仓库 id 3791835）",
+      "files_opened": [
+        "（仅检索命中，未打开单个文件）"
+      ],
+      "reused": "作为 P5「短板补偿」里 RAW 后期 / 降噪 / 超分的**开源可行工具**写进文档，替代只提 PS 的商业软件口径",
+      "not_reused": "未编译、未集成其代码；本项目是选型工具不是修图工具",
+      "as_of": "2026-11-26"
+    },
+    {
+      "id": "amazon_price_tracker",
+      "full_name": "jakobowsky/AmazonPriceTracker",
+      "url": "https://github.com/jakobowsky/AmazonPriceTracker",
+      "stars": 126,
+      "license": "未读取 LICENSE（仓库根目录未见 LICENSE 文件），接入前须自查",
+      "verified_how": "search_repositories 命中 + get_file_contents 亲自打开 / 与 /simple_tracker.py",
+      "files_opened": [
+        "/",
+        "/simple_tracker.py"
+      ],
+      "reused": "借鉴其 GenerateReport 的「date / title / seller / price / url 落 JSON 报告 + 按 price 排序取 best_item」结构，在 scripts/fetch_prices.py 里实现 from_adapter_payload() 适配器契约",
+      "not_reused": "**未复制其 Selenium 抓取代码**：依赖已废弃的 find_element_by_xpath、绑定单一电商站点、反爬与合规风险高，且抓的是挂牌价不是到手价",
+      "as_of": "2026-11-26"
+    },
+    {
+      "id": "price_tracker_bot",
+      "full_name": "chen-tf/price-tracker-bot",
+      "url": "https://github.com/chen-tf/price-tracker-bot",
+      "stars": 126,
+      "license": "未读取，接入前须自查",
+      "verified_how": "search_repositories 命中",
+      "files_opened": [
+        "（仅检索命中，未打开单个文件）"
+      ],
+      "reused": "作为「每日定时采样 + 降价提醒」的成熟形态参考，对照我们的 .github/workflows/update-prices.yml",
+      "not_reused": "未集成；它是中文电商 Telegram 机器人，口径与本项目的四元组到手价不同",
+      "as_of": "2026-11-26"
+    }
+  ]
+}

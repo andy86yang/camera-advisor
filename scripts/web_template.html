@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>相机选购顾问 v2 · 按你的真实情况算一套方案</title>
+<style>
+  :root{
+    --bg:#f5f7fa;--card:#fff;--ink:#1c2229;--sub:#5d6875;--line:#e2e7ed;
+    --accent:#2456b8;--accent-soft:#e9f0fc;--ok:#127a48;--ok-soft:#e6f5ed;
+    --warn-bg:#fff3f0;--warn-line:#f1b9ae;--warn-ink:#a33123;
+    --chip:#eff2f6;--purple:#6b46a8;--purple-soft:#f1eafa;
+    --amber:#96631a;--amber-soft:#fff4e2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.65}
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 70px}
+  header h1{font-size:25px;margin:0 0 4px}
+  header p{color:var(--sub);margin:0 0 14px;font-size:14px}
+  .banner{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);
+    border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;margin-bottom:14px}
+  .banner small{display:block;font-weight:400;margin-top:4px;color:#8a4238}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tabs button{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 15px;
+    font-size:13px;color:var(--sub);cursor:pointer}
+  .tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:17px 19px;margin-bottom:14px;box-shadow:0 1px 2px rgba(20,30,50,.03)}
+  .card h2{font-size:16px;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .card h2 .n{display:inline-flex;width:22px;height:22px;border-radius:6px;background:var(--accent-soft);
+    color:var(--accent);align-items:center;justify-content:center;font-size:12px;font-weight:700}
+  .card .desc{font-size:12px;color:var(--sub);margin:0 0 13px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .row{display:flex;flex-wrap:wrap;gap:13px 20px;align-items:flex-start}
+  .field{min-width:190px;flex:1 1 190px}
+  label.ttl{display:block;font-size:12px;font-weight:600;margin-bottom:6px;color:var(--sub)}
+  input[type=number],select,input[type=text]{width:100%;padding:8px 10px;border:1px solid var(--line);
+    border-radius:8px;font-size:13px;background:#fff;color:var(--ink)}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  .checks{display:flex;flex-wrap:wrap;gap:7px}
+  .checks label{display:inline-flex;align-items:center;gap:6px;background:var(--chip);
+    border:1px solid transparent;border-radius:18px;padding:5px 11px;font-size:12px;cursor:pointer}
+  .checks input{accent-color:var(--accent)}
+  .checks label.on{background:var(--accent-soft);border-color:#b9cdf2;color:#1c448f}
+  .hint{font-size:11px;color:var(--sub);margin-top:7px;line-height:1.6}
+  button.primary{background:var(--accent);color:#fff;border:0;border-radius:9px;
+    padding:12px 30px;font-size:15px;font-weight:600;cursor:pointer}
+  button.primary:hover{background:#1c4699}
+  button.ghost{background:#fff;color:var(--accent);border:1px solid var(--accent);
+    border-radius:8px;padding:8px 15px;font-size:13px;cursor:pointer}
+  button.mini{background:var(--chip);color:var(--sub);border:1px solid var(--line);
+    border-radius:7px;padding:6px 12px;font-size:12px;cursor:pointer}
+  button.mini:hover{border-color:var(--accent);color:var(--accent)}
+  /* 结果 */
+  .profile{background:linear-gradient(135deg,#eef4ff,#f7fbff);border:1px solid #cddcf5}
+  .profile .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+  .profile .box{background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+  .profile .box b{display:block;font-size:12px;color:var(--accent);margin-bottom:5px}
+  .profile .box.sec b{color:var(--amber)}
+  .profile .box.skip b{color:var(--sub)}
+  .profile ul{margin:0;padding-left:17px;font-size:12.5px}
+  .profile li{margin:3px 0}
+  .res{border-left:4px solid var(--accent)}
+  .res.win{border-left-color:var(--ok)}
+  .rank{display:inline-block;background:var(--accent);color:#fff;border-radius:6px;
+    padding:2px 9px;font-size:12px;font-weight:700;margin-right:7px}
+  .res h3{font-size:17px;margin:0 0 2px;display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+  .score{color:var(--sub);font-size:12px;font-weight:400}
+  .badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:5px;
+    background:var(--chip);color:var(--sub);margin-left:3px}
+  .badge.A{background:var(--ok-soft);color:var(--ok)}
+  .badge.B{background:#eaf0fb;color:var(--accent)}
+  .badge.C{background:var(--amber-soft);color:var(--amber)}
+  .badge.D{background:var(--purple-soft);color:var(--purple)}
+  .sec{margin-top:11px}
+  .sec>b{font-size:12px;color:var(--sub);letter-spacing:.3px}
+  ul.tight{margin:5px 0 0;padding-left:19px;font-size:13px}
+  ul.tight li{margin:3px 0}
+  .breakdown{background:#fafbfd;border:1px solid var(--line);border-radius:8px;
+    padding:10px 13px;margin-top:10px;font-size:12.5px}
+  .breakdown table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .breakdown td{padding:3px 0}
+  .breakdown td:last-child{text-align:right;font-weight:600}
+  .breakdown .fin td{border-top:1px solid var(--line);padding-top:6px;color:var(--accent);font-size:14px}
+  .price{background:#fafbfc;border:1px solid var(--line);border-radius:8px;padding:11px 13px;margin-top:10px;font-size:12.5px}
+  .price table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .price td{padding:2px 0}
+  .price td:last-child{text-align:right;font-weight:600}
+  .price .total td{border-top:1px solid var(--line);padding-top:6px;font-size:14px;color:var(--accent)}
+  .price .meta{color:var(--sub);font-size:11px;margin-top:7px;border-top:1px dashed var(--line);padding-top:7px}
+  .tag{display:inline-block;background:var(--ok-soft);color:var(--ok);font-size:11px;
+    border-radius:5px;padding:2px 7px;margin:2px 4px 2px 0}
+  .tag.warn{background:var(--amber-soft);color:var(--amber)}
+  .tag.grey{background:var(--chip);color:var(--sub)}
+  .note{background:var(--accent-soft);border:1px solid #cfddf6;border-radius:8px;
+    padding:10px 12px;font-size:12.5px;margin-top:10px;color:#22417e}
+  .note.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn-ink)}
+  textarea{width:100%;height:250px;border:1px solid var(--line);border-radius:8px;
+    padding:11px;font-size:11.5px;font-family:Consolas,monospace;background:#fbfcfd;color:var(--ink)}
+  .foot{font-size:11.5px;color:var(--sub);text-align:center;margin-top:22px;line-height:1.9}
+  .empty{background:#fff8e8;border:1px solid #f0d9a8;border-radius:8px;padding:13px;font-size:13px}
+  .kv{font-size:12.5px;color:var(--sub)}
+  .kv b{color:var(--ink)}
+  @media(max-width:720px){.profile .grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>相机选购顾问 <span style="font-size:14px;color:var(--accent)">v2</span></h1>
+  <p>不是「哪台参数好」，是「<b>你这个人在你真实的约束下，哪套方案最值、最愿意用、最不后悔</b>」。填完一键跑，出用户画像 + 方案 + 补偿清单 + 哪些钱白花了。</p>
+</header>
+
+<div class="banner">
+  ⚠️ 价格全为【示例 / 举证 / 用户自述未核实】，不是实时报价，禁止用于下单。
+  <div id="priceBanner" style="margin-top:6px;font-size:12px">价格状态加载中…</div>
+  <small>本页是纯静态离线成品：所有计算在本机完成，<b>不联网</b>。价格过期不参与决策（详见 PRICE_FRESHNESS.md）；真·联网调研由配套 skill 完成。网站部署与小程序按用户要求先不做。</small>
+</div>
+
+<div class="card" style="padding:13px 18px">
+  <div class="row" style="align-items:center">
+    <div style="flex:1 1 320px">
+      <label class="ttl">先选一个身份，或直接载入我口述的那段真实经历</label>
+      <select id="preset">
+        <option value="">— 自定义，我自己填 —</option>
+        <option value="hiker">爬山党 / 手机不够用（用户口述原例）</option>
+        <option value="student">学生党 / 预算紧 + 现有配件有限</option>
+        <option value="vlogger">拍 vlog / 短视频为主</option>
+        <option value="portrait">主要拍人 / 直出不想修图</option>
+        <option value="workflow">搭工作流 / 以后要升级镜头群</option>
+        <option value="allround_10k">1 万预算 / 功能多 / 风光+人像（现场提问）</option>
+        <option value="print">风光 / 打印 / 商业交付</option>
+      </select>
+    </div>
+    <div style="flex:0 0 auto;padding-top:18px">
+      <button class="mini" onclick="loadPreset()">载入预设</button>
+      <button class="mini" onclick="clearAll()">清空</button>
+    </div>
+  </div>
+  <div class="hint">预设只帮你把表单填好，<b>每一项都能改</b>；所有计算仍然按你最终填的值跑。</div>
+</div>
+
+<!-- ① 现有装备 -->
+<div class="card">
+  <h2><span class="n">1</span>现有装备与真实痛点</h2>
+  <p class="desc">起点不是品牌口诀，是你手上已经有什么、哪里不够用、还有什么资源是稀缺的。</p>
+  <div class="row">
+    <div class="field">
+      <label class="ttl">现在主要用什么拍</label>
+      <select id="current_gear">
+        <option value="none">没有趁手的设备 / 从零开始</option>
+        <option value="xiaomi_13pro">手机：小米 13 Pro（一英寸，长焦弱、微距可）</option>
+        <option value="phone_other">其他手机（底小于一英寸）</option>
+        <option value="old_camera">已有老相机 / 有镜头可复用</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="ttl">已有可复用的配件 / 镜头</label>
+      <select id="existing_kit">
+        <option value="none">没有</option>
+        <option value="some">有一些（三脚架 / 滤镜 / 卡）</option>
+        <option value="lenses">有同卡口镜头可复用</option>
+      </select>
+    </div>
+  </div>
+  <div style="margin-top:13px">
+    <label class="ttl">最不满意的是什么（可多选，决定「主要矛盾」）</label>
+    <div class="checks" id="pains"></div>
+  </div>
+  <div style="margin-top:13px">
+    <label class="ttl">其他稀缺资源 / 约束</label>
+    <div class="checks" id="constraints"></div>
+  </div>
+</div>
+
+<!-- ② 场景与身体 -->
+<div class="card">
+  <h2><span class="n">2</span>真实使用场景、负重与身体</h2>
+  <p class="desc">「愿意带出去」比纸面画质重要：带不出去的机器，参数再高实际产出为零。</p>
+  <div class="row">
+    <div class="field">
+      <label class="ttl">单次徒步 / 外拍距离</label>
+      <select id="trek_km">
+        <option value="0">基本不走，室内 / 就近</option>
+        <option value="5">5 km 左右</option>
+        <option value="10">10 km</option>
+        <option value="20">15–20 km 爬山</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="ttl">手型 / 握力</label>
+      <select id="hand_size">
+        <option value="medium">中等</option>
+        <option value="small">手小 / 劲儿小 / 年纪小</option>
+        <option value="large">手大 / 握力强</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="ttl">身高（影响三脚架）</label>
+      <select id="height_cm">
+        <option value="170">170 cm 左右或以下</option>
+        <option value="180">180 cm 及以上</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="ttl">担心筋膜炎 / 手腕劳损</label>
+      <select id="tendinitis"><option value="no">不担心</option><option value="yes">担心，越轻越好</option></select>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 预算与理财 -->
+<div class="card">
+  <h2><span class="n">3</span>预算、整套可行性与资产观</h2>
+  <p class="desc">预算约束的是「机身 + 镜头 + 配件」整套；买完机身没钱买头 = 方案不成立。</p>
+  <div class="row">
+    <div class="field"><label class="ttl">总预算（元，含机身+镜头+配件）</label>
+      <input type="number" id="budget" value="10000" min="1000" max="200000" step="500"></div>
+    <div class="field"><label class="ttl">画幅偏好</label>
+      <select id="sensor"><option value="any">都行，帮我看</option><option value="全画幅">就想玩全画幅</option>
+        <option value="APS-C">就想玩半画幅</option><option value="M43">M43 / 要轻便长焦</option></select></div>
+    <div class="field"><label class="ttl">所在省份 / 国补资格</label>
+      <select id="region"><option value="unknown">不确定 / 先不算国补</option>
+        <option value="eligible">在补贴省份且资格没用过</option><option value="ineligible">不在 / 名额已用</option></select></div>
+  </div>
+  <div style="margin-top:13px"><label class="ttl">购买与持有偏好（可多选）</label>
+    <div class="checks" id="finance"></div></div>
+  <div class="hint">「退居二线」：机器以后能当 vlog 机 / 直播副机位 / 备机，就不必出二手，账面损失不落袋。</div>
+</div>
+
+<!-- ④ 输出端与后期 -->
+<div class="card">
+  <h2><span class="n">4</span>片子最后发到哪、你愿意做多少后期</h2>
+  <p class="desc">收益由<b>输出端</b>决定，不由拍摄端决定；短板可以用 RAW、低 ISO、大光圈、后期补回来。</p>
+  <div class="row">
+    <div class="field"><label class="ttl">主要输出端</label>
+      <select id="output_target"></select></div>
+    <div class="field"><label class="ttl">你的熟悉程度</label>
+      <select id="expertise"><option value="novice">小白（AI 替我判断谁可信）</option>
+        <option value="enthusiast">爱好者，懂点后期</option><option value="power">发烧友，全量逐条复算</option></select></div>
+  </div>
+  <div style="margin-top:13px"><label class="ttl">你会 / 愿意做的补偿手段（可多选，直接改变有效分）</label>
+    <div class="checks" id="abilities"></div></div>
+</div>
+
+<!-- ⑤ 场景、社交 -->
+<div class="card">
+  <h2><span class="n">5</span>拍什么、在意什么、以及别人怎么看</h2>
+  <p class="desc">马斯洛里除了自我认同还有社交：品牌文化与他人观感是真实需求，做成可调的显式维度。</p>
+  <div style="margin-top:4px"><label class="ttl">主要拍什么（可多选）</label><div class="checks" id="scenes"></div></div>
+  <div style="margin-top:13px"><label class="ttl">特别在意（可多选）</label><div class="checks" id="priorities"></div></div>
+  <div class="row" style="margin-top:14px">
+    <div class="field" style="max-width:340px">
+      <label class="ttl">在意别人怎么看：<span id="socialVal">0.15</span></label>
+      <input type="range" id="social_weight" min="0" max="0.6" step="0.05" value="0.15">
+      <div class="hint">0 = 完全不在乎；0.6 = 很在乎品牌面子 / 社交认同。默认低，但你拉高它就真的会改变排序。</div>
+    </div>
+    <div class="field"><label class="ttl">镜头品牌范围（推荐时搭配用）</label>
+      <div class="checks" id="lens_groups"></div></div>
+  </div>
+</div>
+
+<div class="card" style="text-align:center;background:linear-gradient(135deg,#f8fbff,#eef4ff)">
+  <button class="primary" onclick="run()">生成我的选购报告</button>
+  <div class="hint">不用联网、不用登录、不用 API Key。所有计算逐条可复算，最后能一键导出交给别的 AI 挑错。</div>
+</div>
+
+<div id="output"></div>
+
+<div class="card" id="exportCard" style="display:none">
+  <h2>一键导出 · 交给其他 AI 交叉论证</h2>
+  <p class="desc">这段 = 你的全部输入 + 引擎每一步的计算 + 结果 + 出处与未核实留白。整段复制给第二个模型即可。</p>
+  <textarea id="exportText" readonly></textarea>
+  <div style="margin-top:11px"><button class="ghost" onclick="copyExport()">复制这段</button>
+    <span id="copyHint" style="font-size:12px;color:var(--sub);margin-left:10px"></span></div>
+</div>
+
+<div class="foot">
+  v2 · 2026-11-25 · 方法论见 <code>10_用户方法论_第一性原理.md</code> · 可开源仓库 <code>12_camera-advisor-repo/</code><br>
+  分数是<b>相对排序</b>用，不是绝对评分；口碑带 as_of 与 status，过期自动降权；价格永远带观测日与来源，缺一项就标「未核实」。<br>
+  静态网页不联网；实时到手价与口碑复核由 <code>07_camera-advisor-skill</code> 的联网工作流完成。
+</div>
+</div>
+
+<script>
+/*__DATA_V2__*/
+
+/* ============ 表单定义 ============ */
+const PAINS=[
+  {id:"wide",label:"广角不够 / 拍不全"},{id:"tele",label:"长焦不行 / 拉不远"},
+  {id:"pixels",label:"像素 / 清晰度不够"},{id:"lowlight",label:"暗光噪点多"},
+  {id:"dynamic",label:"动态范围 / 大光比"},{id:"battery",label:"设备电量不够用"},
+  {id:"post",label:"后期太麻烦 / 上限低"}
+];
+const CONSTRAINTS=[
+  {id:"phone_battery",label:"手机电量本身很紧张（导航/上传/付费）"},
+  {id:"time_scarce",label:"时间稀缺，不想花很多后期"},
+  {id:"money_scarce",label:"钱确实紧，优先便宜"}
+];
+const FINANCE=[
+  {id:"accept_used",label:"能接受二手"},{id:"accept_grey",label:"能接受港版 / 水货"},
+  {id:"transitional_ok",label:"接受过渡机 / 老机型"},{id:"care_resale",label:"在意保值 / 以后要出二手"},
+  {id:"include_user_sample",label:"把用户自述的 Z30 样例也纳入候选"}
+];
+const ABILITIES=[
+  {id:"can_raw",label:"会拍 RAW、不拍 JPEG"},{id:"willing_post",label:"愿意后期 10–20 分钟（降噪/超分）"},
+  {id:"buy_fast_lens",label:"愿意买 F1.7 / F1.2 大光圈头"},{id:"static_subject",label:"多拍静态题材（可放慢快门/补灯）"}
+];
+const LENS_GROUPS=[{id:"原厂",label:"原厂"},{id:"副厂",label:"副厂 腾龙/适马"},{id:"国产",label:"国产 维卓仕/老蛙/七工匠"}];
+
+function chips(host,items,defs){
+  const el=document.getElementById(host); if(!el)return;
+  el.innerHTML="";
+  items.forEach(it=>{
+    const l=document.createElement("label");
+    const on=(defs||[]).includes(it.id);
+    l.className=on?"on":"";
+    l.innerHTML='<input type="checkbox" value="'+it.id+'"'+(on?" checked":"")+'><span>'+it.label+'</span>';
+    l.querySelector("input").addEventListener("change",()=>l.classList.toggle("on",l.querySelector("input").checked));
+    el.appendChild(l);
+  });
+}
+function picked(host){return Array.from(document.querySelectorAll("#"+host+" input:checked")).map(x=>x.value)}
+function setChecks(host,ids){
+  document.querySelectorAll("#"+host+" input").forEach(i=>{
+    i.checked=ids.includes(i.value);
+    i.closest("label").classList.toggle("on",i.checked);
+  });
+}
+function val(id){return document.getElementById(id).value}
+function checked(id){return document.getElementById(id).checked}
+
+/* 输出端下拉 */
+(function(){
+  const s=document.getElementById("output_target");
+  Object.keys(DATA.rules.output_caps).filter(k=>k[0]!=="_").forEach(k=>{
+    const o=document.createElement("option");o.value=k;o.textContent=DATA.rules.output_caps[k].label;s.appendChild(o);
+  });
+  s.value="wechat";
+})();
+
+/* 场景 / 在意项 */
+const SCENES=Object.keys(DATA.rules.scene_to_attributes).map(id=>({id,label:DATA.rules.scene_labels[id]||id,attrs:Object.entries(DATA.rules.scene_to_attributes[id])}));
+const ATTR_LABEL=DATA.rules.attr_labels;
+const PRIORITIES=Object.keys(DATA.rules.priority_boost).map(id=>({id,label:DATA.rules.priority_boost[id].label,attr:DATA.rules.priority_boost[id].attr,weight:DATA.rules.priority_boost[id].weight}));
+chips("pains",PAINS);chips("constraints",CONSTRAINTS);chips("finance",FINANCE);
+chips("abilities",ABILITIES);chips("scenes",SCENES);chips("priorities",PRIORITIES);
+chips("lens_groups",LENS_GROUPS,["原厂","副厂","国产"]);
+document.getElementById("social_weight").addEventListener("input",e=>document.getElementById("socialVal").textContent=Number(e.target.value).toFixed(2));
+
+/* ============ 预设 ============ */
+const PRESETS={
+  allround_10k:{current_gear:"phone_other",existing_kit:"none",trek_km:"8",hand_size:"medium",height_cm:"170",tendinitis:"no",
+    budget:10000,sensor:"any",region:"unknown",output_target:"xiaohongshu",expertise:"enthusiast",social_weight:"0.15",
+    pains:["wide","pixels","tele"],constraints:["money_scarce"],finance:["transitional_ok"],
+    abilities:["can_raw","willing_post","buy_fast_lens"],scenes:["landscape","portrait","travel"],priorities:["light","af"]},
+  hiker:{current_gear:"xiaomi_13pro",existing_kit:"none",trek_km:"20",hand_size:"small",height_cm:"170",tendinitis:"yes",
+    budget:10000,sensor:"any",region:"unknown",output_target:"wechat",expertise:"enthusiast",social_weight:"0.05",
+    pains:["wide","pixels","tele","post"],constraints:["phone_battery","time_scarce"],
+    finance:["transitional_ok","include_user_sample"],abilities:["can_raw","willing_post","buy_fast_lens","static_subject"],
+    scenes:["travel","landscape"],priorities:["light"]},
+  student:{current_gear:"phone_other",existing_kit:"some",trek_km:"5",hand_size:"small",height_cm:"170",tendinitis:"no",
+    budget:6000,sensor:"any",region:"unknown",output_target:"wechat",expertise:"novice",social_weight:"0.25",
+    pains:["pixels","tele","battery"],constraints:["money_scarce"],finance:["accept_used","transitional_ok"],
+    abilities:[],scenes:["street","travel"],priorities:["light"]},
+  vlogger:{current_gear:"phone_other",existing_kit:"none",trek_km:"5",hand_size:"medium",height_cm:"170",tendinitis:"no",
+    budget:14000,sensor:"any",region:"unknown",output_target:"douyin",expertise:"enthusiast",social_weight:"0.20",
+    pains:["lowlight","dynamic"],constraints:["time_scarce"],finance:[],abilities:["can_raw"],
+    scenes:["video","workflow"],priorities:["ibis","video_spec"]},
+  portrait:{current_gear:"none",existing_kit:"none",trek_km:"0",hand_size:"medium",height_cm:"170",tendinitis:"no",
+    budget:16000,sensor:"any",region:"unknown",output_target:"xiaohongshu",expertise:"novice",social_weight:"0.35",
+    pains:["lowlight"],constraints:[],finance:[],abilities:[],scenes:["portrait"],priorities:["af"]},
+  workflow:{current_gear:"old_camera",existing_kit:"lenses",trek_km:"5",hand_size:"large",height_cm:"180",tendinitis:"no",
+    budget:20000,sensor:"any",region:"unknown",output_target:"bilibili",expertise:"power",social_weight:"0.30",
+    pains:["tele","lowlight"],constraints:[],finance:["care_resale"],abilities:["can_raw","willing_post"],
+    scenes:["workflow","video","wildlife"],priorities:["af"]},
+  print:{current_gear:"old_camera",existing_kit:"lenses",trek_km:"10",hand_size:"large",height_cm:"180",tendinitis:"yes",
+    budget:30000,sensor:"全画幅",region:"unknown",output_target:"print",expertise:"power",social_weight:"0.10",
+    pains:["pixels","dynamic"],constraints:[],finance:[],abilities:["can_raw","willing_post"],
+    scenes:["landscape"],priorities:[]}
+};
+function loadPreset(){
+  const k=val("preset"); if(!k){alert("先选一个身份");return}
+  const p=PRESETS[k];
+  ["current_gear","existing_kit","trek_km","hand_size","height_cm","tendinitis","budget","sensor","region",
+   "output_target","expertise","social_weight"].forEach(id=>{if(p[id]!==undefined)document.getElementById(id).value=p[id]});
+  ["pains","constraints","finance","abilities","scenes","priorities"].forEach(h=>setChecks(h,p[h]||[]));
+  document.getElementById("socialVal").textContent=Number(p.social_weight||0.15).toFixed(2);
+  document.getElementById("lens_groups")&&setChecks("lens_groups",["原厂","副厂","国产"]);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function clearAll(){
+  ["pains","constraints","finance","abilities","scenes","priorities"].forEach(h=>setChecks(h,[]));
+  document.getElementById("budget").value=10000;
+  document.getElementById("output_target").value="wechat";
+  document.getElementById("output").innerHTML="";
+  document.getElementById("exportCard").style.display="none";
+}
+
+/* ============ 引擎（与 engine/scoring.py 同一套规则） ============ */
+function fmt(n){return "¥"+Number(Math.round(n)).toLocaleString("zh-CN")}
+function finalOf(p){return Math.max(0,p.list_price-p.coupon-p.subsidy-p.trade_in+p.shipping)}
+function kitOf(p){return finalOf(p)+p.lens+p.accessories}
+
+/* ---- v3：价格新鲜度与慢变档位（与 engine/scoring.py 严格同源）---- */
+function tierOf(b){const t=(DATA.price_tiers||{})[b.id];return t?t.tier:null}
+function priceFreshness(p){
+  const fp=DATA.freshness_policy||{default_ttl_days:7,trusted_confidence:["verified"],ttl_days_by_type:{}};
+  const conf=p.confidence||"unverified";
+  const obs=String(p.observed_at||"").slice(0,10);
+  const d=new Date(obs+"T00:00:00");
+  if(isNaN(d.getTime()))return {status:"unverified",age:null,ttl:null,label:"无有效观测日 → 未核实"};
+  const age=Math.floor((new Date()-d)/86400000);
+  const ttl=(fp.ttl_days_by_type||{})[p.price_type||"final_price"]||fp.default_ttl_days||7;
+  if((fp.trusted_confidence||["verified"]).indexOf(conf)<0)
+    return {status:"unverified",age:age,ttl:ttl,label:"来源未核实（confidence="+conf+"）"};
+  if(age<0)return {status:"unverified",age:age,ttl:ttl,label:"观测日在未来，拒绝采信"};
+  if(age>ttl)return {status:"stale",age:age,ttl:ttl,label:"已过期 "+age+" 天（TTL "+ttl+" 天）"};
+  return {status:"fresh",age:age,ttl:ttl,label:"观测于 "+age+" 天前，未过期"};
+}
+function freshnessSummary(){
+  const o={fresh:0,stale:0,unverified:0,asOf:new Date().toISOString().slice(0,10)};
+  DATA.bodies.forEach(b=>o[priceFreshness(b.price).status]++);
+  o.allStale=o.fresh===0;return o;
+}
+function initPriceBanner(){
+  const el=document.getElementById("priceBanner");if(!el)return;
+  const s=freshnessSummary();
+  el.innerHTML="价格状态：fresh <b>"+s.fresh+"</b> / stale <b>"+s.stale+"</b> / unverified <b>"+s.unverified+
+    "</b> ｜ 观测基准日 "+s.asOf+
+    (s.allStale?"<br><b style='color:#b42318'>🚨 本结果仅为规则排序，不含任何实时到手价结论，请联网复核。预算硬过滤已改用慢变档位，不用会过期的到手价。</b>":"");
+}
+
+function readQ(){
+  return {
+    budget:Number(val("budget"))||10000, sensor:val("sensor"), region:val("region"),
+    current_gear:val("current_gear"), existing_kit:val("existing_kit"),
+    trek_km:Number(val("trek_km")), hand_size:val("hand_size"), height_cm:Number(val("height_cm")),
+    tendinitis:val("tendinitis"), output_target:val("output_target"), expertise:val("expertise"),
+    social_weight:Number(val("social_weight")),
+    pains:picked("pains"), constraints:picked("constraints"), finance:picked("finance"),
+    abilities:picked("abilities"), scenes:picked("scenes"), priorities:picked("priorities"),
+    lens_groups:picked("lens_groups")
+  };
+}
+
+function weightLimit(q){
+  // P7：距离越大，可接受整套重量越低；手小/筋膜炎再下调
+  const wp=DATA.rules.weight_policy;
+  let limit=wp.limit_at_20km_g+(20-q.trek_km)*18;
+  if(q.hand_size==="small")limit*=0.88;
+  if(q.tendinitis==="yes")limit*=0.85;
+  return Math.round(limit);
+}
+
+function compute(q,b){
+  const d={name:b.name,b:b,parts:[],blocked:null,capItems:[],compItems:[],reputation:[]};
+  const limit=weightLimit(q);
+  const kit=kitOf(b.price);
+  /* v3：慢变档位管决策，快变 spot 只管展示；每条价格运行期算新鲜度 */
+  const tier=tierOf(b), fresh=priceFreshness(b.price);
+  const basis=(fresh.status!=="fresh"&&tier!=null)?tier:kit;
+  d.budgetWarning = kit>q.budget
+    ? "示例整套价 "+fmt(kit)+" 已超预算 "+fmt(q.budget)+"（非实时价，仅供参考：换更便宜镜头或联网核实实时价）"
+    : null;
+  d.priceTier=tier;d.priceStatus=fresh.status;d.priceLabel=fresh.label;
+  d.priceBasis=basis;d.priceBasisNote=(fresh.status!=="fresh"&&tier!=null)?"tier（价格 "+fresh.status+"，已改用慢变档位）":"spot（价格 fresh）";
+  // P7 修正：整套重量按「该卡口能配到的最轻镜头」算，不能给套机硬塞一颗 520g 标变，
+  // 否则 Z30+16-50(135g) 这类「愿意带出去」的方案会被误判过重而全部否决。
+  const usable=DATA.lenses.filter(l=>q.lens_groups.includes(l.brand_type)&&
+    (l.mount.includes(b.mount)||l.mount==="多卡口"));
+  const lensW=usable.length?Math.min.apply(null,usable.map(l=>l.weight_g)):300;
+  const totalW=b.weight_g+lensW;
+  d.lensW=lensW;
+
+  /* M1 硬过滤 ------------------------------------------------------------ */
+  const vetoG=DATA.rules.weight_policy.hard_veto_total_g||900;
+  if(b.user_reported && !q.finance.includes("include_user_sample"))
+    d.blocked="用户自述样例机（默认不参与真实推荐）";
+  else if(q.sensor!=="any" && b.sensor!==q.sensor) d.blocked="画幅不符合";
+  else if(!q.finance.includes("accept_used") && b.used) d.blocked="你不接受二手";
+  else if(tier!=null && tier>q.budget) d.blocked="价格档位 "+fmt(tier)+" 超出预算（档位慢变，不依赖会过期的到手价）";
+  else if(tier==null && kit>q.budget) d.blocked="整套超出预算（⚠️ 缺档位表，用示例价兜底，不可信）";
+  else if(q.trek_km>=15 && totalW>vetoG) d.blocked="徒步≥15km 且整套>"+vetoG+"g：一票否决";
+  else if(totalW>limit*1.35) d.blocked="整套重量超出你的负重上限 "+limit+"g";
+  if(d.blocked) return d;
+
+  /* M2 裸分（v1 的场景加权 + 特别在意） --------------------------------- */
+  let base=0; const detail=[];
+  q.scenes.forEach(sid=>{
+    const sc=SCENES.find(s=>s.id===sid); if(!sc)return;
+    sc.attrs.forEach(([a,w])=>{
+      const v=(b.attrs[a]||0)*w; base+=v;
+      detail.push({label:ATTR_LABEL[a]||a,scene:sc.label,w,v});
+    });
+  });
+  q.priorities.forEach(pid=>{
+    const p=PRIORITIES.find(x=>x.id===pid); if(!p)return;
+    const v=(b.attrs[p.attr]||0)*p.weight; base+=v;
+    detail.push({label:ATTR_LABEL[p.attr]||p.attr,scene:"特别在意："+p.label,w:p.weight,v});
+  });
+
+  /* M7a 品牌加分：必须过「口碑时间戳」检查 ------------------------------- */
+  let bonus=0;
+  DATA.rules.brand_bonus.forEach(r=>{
+    if(r.brand!==b.brand)return;
+    const ok=r.requires.every(n=>{
+      if(["jpeg_only","accept_used","low_budget"].includes(n)){
+        if(n==="jpeg_only")return !q.abilities.includes("can_raw");
+        if(n==="accept_used")return q.finance.includes("accept_used");
+        return q.constraints.includes("money_scarce");
+      }
+      if(n==="full_frame")return b.sensor==="全画幅";
+      return q.scenes.includes(n);
+    });
+    if(!ok)return;
+    // P9：brand_bonus 已由 banned_rules 剔除被推翻的口诀；
+    // reputation.json 里 outdated / disputed 的条目权重恒为 0，绝不参与计算（见第③节全量公示）。
+    bonus+=r.weight;
+    d.parts.push({k:"品牌加分 "+r.id,v:r.weight,why:r.why+" ["+r.evidence+" 级，已过时间戳检查]"});
+  });
+
+  /* M7b 社交认同（用户可调显式维度，不偷偷塞进品牌分） -------------------- */
+  const social=q.social_weight*(b.social_perception||0.5);
+  if(social>0)d.parts.push({k:"社交认同（你拉高的权重）",v:social,why:"social_weight × 该机型社交认知示例分"});
+
+  /* M2b 补偿：短板 × 手段增益 − 代价（P5） -------------------------------- */
+  const comp=DATA.rules.compensations; let compGain=0,compCost=0;
+  const abilityMap={can_raw:"can_raw",willing_post:"willing_post",buy_fast_lens:"buy_fast_lens",static_subject:"static_subject"};
+  const shortfall={
+    dynamic_range:1-(b.attrs.dynamic_range||0),
+    low_light_noise:1-(b.attrs.dynamic_range||0),
+    total_light:1-((b.attrs.dynamic_range||0)*0.5+0.35)
+  };
+  Object.keys(comp).filter(k=>k[0]!=="_").forEach(cat=>{
+    comp[cat].forEach(m=>{
+      const able=!m.requires||q.abilities.includes(abilityMap[m.requires]||m.requires);
+      if(!able)return;
+      // 输出端 cap 会削弱「补像素」这类手段
+      const cap=DATA.rules.output_caps[q.output_target].caps||{};
+      const capped=(m.means.includes("超分")&&(cap.megapixels_score||1)<0.5);
+      const g=m.gain*(shortfall[cat]||0)*(capped?0.3:1);
+      const c=(m.cost_min||0)*0.006+(m.cost_money||0)/6000;
+      compGain+=g; compCost+=c;
+      d.compItems.push({cat,means:m.means,gain:g,cost:c,
+        note:m.note+(capped?"（输出端已压缩，超分收益打折）":"")});
+    });
+  });
+
+  /* M3 输出端天花板：超出 cap 的属性折损（P6） --------------------------- */
+  const oc=DATA.rules.output_caps[q.output_target];
+  const caps=oc.caps||{}, pen=oc.over_cap_penalty||0;
+  let capLoss=0;
+  Object.keys(caps).forEach(a=>{
+    const over=Math.max(0,(b.attrs[a]||0)-caps[a]);
+    if(over<=0)return;
+    // 该属性在所选场景里的总权重
+    let w=0;
+    q.scenes.forEach(sid=>{w+=((DATA.rules.scene_to_attributes[sid]||{})[a]||0)});
+    q.priorities.forEach(pid=>{const p=PRIORITIES.find(x=>x.id===pid);if(p&&p.attr===a)w+=p.weight});
+    const loss=over*pen*Math.max(0.3,w);
+    capLoss+=loss;
+    d.capItems.push({attr:ATTR_LABEL[a]||a,cap:caps[a],actual:b.attrs[a]||0,loss});
+  });
+
+  /* M4 携带意愿：乘性出勤率因子（P7） ------------------------------------ */
+  const ratio=Math.min(1,limit/Math.max(1,totalW));
+  const carry=0.55+0.45*Math.pow(ratio,(DATA.rules.weight_policy.carry_exponent||0.9));
+
+  /* 汇总有效分 ------------------------------------------------------------ */
+  const pre=(base+bonus+social+compGain-capLoss-compCost);
+  const score=Math.max(0,pre)*carry;
+  d.base=base;d.bonus=bonus;d.social=social;d.compGain=compGain;d.compCost=compCost;
+  d.capLoss=capLoss;d.carry=carry;d.score=score;d.kit=kit;d.totalW=totalW;d.limit=limit;d.detail=detail;
+  d.parts.unshift({k:"裸分（场景+特别在意）",v:base,why:"按你选的场景逐条累加"});
+  if(compGain)d.parts.push({k:"短板补偿 +",v:compGain,why:"RAW/低ISO/大光圈/后期，见补偿清单"});
+  if(compCost)d.parts.push({k:"补偿代价 −",v:-compCost,why:"后期时间 + 器材钱"});
+  if(capLoss)d.parts.push({k:"输出端超出部分折损 −",v:-capLoss,why:oc.label});
+  d.parts.push({k:"× 携带意愿因子",v:carry,why:"整套 "+totalW+"g（机身 "+b.weight_g+"g + 最轻镜头 "+lensW+"g）/ 上限 "+limit+"g → 出勤率 "+Math.round(carry*100)+"%",mul:true});
+
+  /* M5 边际性价比 -------------------------------------------------------- */
+  d.valueRatio=score/(Math.max(1,basis)/1000);
+
+  /* M6 持有成本（P4/P8） ------------------------------------------------- */
+  const off=DATA.rules.secondary_use_offset;
+  const offset=Math.min(off.max_offset,(b.secondary_uses||[]).length*off.per_use_offset)*basis;
+  const dep=b.first_launch_price?Math.max(0,b.first_launch_price-basis):Math.round(basis*0.22);
+  const resale=q.finance.includes("care_resale")?Math.round(basis*0.15):0;
+  d.holding={depreciation:dep,resale,offset,net:Math.max(0,dep+resale-offset)};
+  return d;
+}
+
+function lensesFor(b,groups){
+  return DATA.lenses.filter(l=>groups.includes(l.brand_type)&&(l.mount.includes(b.mount)||l.mount==="多卡口"))
+    .sort((a,c)=>a.price-c.price).slice(0,4);
+}
+
+/* ============ 用户画像（P1/P11） ============ */
+function buildProfile(q){
+  const main=[],sec=[],skip=[];
+  const painLabel=id=>(PAINS.find(p=>p.id===id)||{}).label||id;
+  q.pains.forEach(p=>main.push("补齐「"+painLabel(p)+"」这个现有装备的短板"));
+  if(q.constraints.includes("phone_battery"))main.push("手机电量是稀缺资源 → 需要一台独立拍摄设备，别再靠手机硬扛");
+  if(q.trek_km>=15)main.push("单次 "+q.trek_km+"km 徒步 → 整机重量与出勤率优先于纸面画质");
+  if(!main.length)main.push("先明确「主要拍什么」，否则权重会分散");
+  const oc=DATA.rules.output_caps[q.output_target];
+  main.push("输出端是「"+oc.label+"」→ 超过这个上限的投入是白花钱");
+  sec.push("整套预算 "+fmt(q.budget)+" 必须同时覆盖机身 + 镜头 + 配件");
+  sec.push("补偿能力："+(q.abilities.length?q.abilities.length+" 项可用，短板可被部分抵消":"暂不具备，短板要按裸分承担"));
+  sec.push("社交认同权重 "+q.social_weight.toFixed(2)+(q.social_weight>=0.3?"（较高，品牌观感会明显影响排序）":"（较低）"));
+  if(q.height_cm>=180)sec.push("身高 ≥180cm：三脚架工作高度建议 ≥160cm，别买矮架");
+  if(q.hand_size==="small")sec.push("手小 / 劲儿小：优先 small grip、整机 ≤550g，避免单手长焦");
+  if(q.tendinitis==="yes")sec.push("担心筋膜炎：负重上限已下调 15%，优先塑料机身 + 轻定焦");
+  const capKeys=Object.keys(oc.caps||{});
+  capKeys.forEach(a=>skip.push((ATTR_LABEL[a]||a)+"（在 "+oc.label+" 下超出 "+oc.caps[a]+" 的部分不计收益）"));
+  skip.push("镜头 MTF 的最后一档差距、发电机是哪次工业革命的产物 —— 对你的目标不构成主要矛盾");
+  const shouldAdd=(q.constraints.includes("phone_battery")||q.pains.includes("wide")||q.pains.includes("tele")||q.pains.includes("pixels"));
+  return {main,sec,skip,shouldAdd,oc};
+}
+
+/* ============ 渲染 ============ */
+function run(){
+  const q=readQ();
+  if(!q.scenes.length){
+    document.getElementById("output").innerHTML='<div class="card empty">先在「拍什么」里选至少一项，不然没东西可算。</div>';
+    document.getElementById("exportCard").style.display="none";return;
+  }
+  const all=DATA.bodies.map(b=>compute(q,b));
+  const valid=all.filter(x=>!x.blocked).sort((a,c)=>c.score-a.score);
+  const top=valid.slice(0,3);
+  const blocked=all.filter(x=>x.blocked);
+  const prof=buildProfile(q);
+
+  let h='';
+  /* 画像 */
+  h+='<div class="card profile"><h2>① 你的用户画像 · 先分主次矛盾</h2>'+
+     '<p class="desc" style="border:0;margin:0;padding:0">只给对你这个目标有用的信息，不把你培养成全才（滴滴司机不必懂发电机历史）。</p>';
+  h+='<div class="grid">'+
+     '<div class="box"><b>主要矛盾</b><ul>'+prof.main.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>'+
+     '<div class="box sec"><b>次要矛盾</b><ul>'+prof.sec.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>'+
+     '<div class="box skip"><b>不必纠结（不做全才）</b><ul>'+prof.skip.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>'+
+     '</div>';
+  h+='<div class="note"><b>要不要增加一台独立拍摄设备：'+(prof.shouldAdd?'建议要':'暂时不必')+'</b>。'+
+     (prof.shouldAdd?'你的现有装备在核心痛点上已到上限，且手机电量 / 时间属于稀缺资源，继续靠后期锐化+超分是「麻烦且上限低」的路径。'
+                   :'现有装备尚能覆盖主要场景，先把输出端与后期流程理顺更划算。')+
+     ' 预算 '+fmt(q.budget)+'，负重上限 '+weightLimit(q)+'g，输出端 '+prof.oc.label+'。</div>';
+  if(q.expertise==="novice")h+='<div class="hint">小白模式：谁更权威、谁恰饭这类判断由 AI 代做，本页不把权威加权表甩给你。</div>';
+  h+='</div>';
+
+  /* 方案 */
+  if(!top.length){
+    h+='<div class="card empty">按你填的整套预算与负重限制，示例库里没有能配下来的机器。<br>可放宽预算 / 负重 / 画幅，或勾选「接受过渡机」和「纳入用户自述样例」再试。</div>';
+  }else{
+    h+='<div class="card"><h2>② 候选与硬过滤</h2><p class="desc">共 '+all.length+' 台候选，'+valid.length+' 台通过；'+
+       blocked.length+' 台被排除（预算买不齐整套 / 画幅 / 二手偏好 / 负重一票否决）。</p>'+
+       '<div class="kv">被排除：'+blocked.slice(0,6).map(x=>'<b>'+x.name+'</b> — '+x.blocked).join('；')+
+       (blocked.length>6?'；……还有 '+(blocked.length-6)+' 台':'')+'</div></div>';
+    top.forEach((d,i)=>{
+      const b=d.b,p=b.price;
+      h+='<div class="card res'+(i===0?' win':'')+'"><h3><span class="rank">第 '+(i+1)+' 名</span>'+b.name+
+         ' <span class="score">有效分 '+d.score.toFixed(2)+'（相对排序用，不是绝对评分）</span></h3>';
+      h+='<div class="kv">'+b.brand+' · '+b.sensor+' · '+b.mount+' 卡口 · '+b.weight_g+'g · '+
+         (b.role==="transitional"?'<span class="tag">过渡机</span>':'')+
+         (b.user_reported?'<span class="tag warn">用户自述样例</span>':'')+
+         (b.secondary_uses.length?'<span class="tag">可退居二线：'+b.secondary_uses.join('/')+'</span>':'')+'</div>';
+      h+='<div class="kv" style="margin-top:4px">'+b.note+'</div>';
+
+      /* 逐条可复算 */
+      h+='<div class="breakdown"><b style="font-size:12px">有效分怎么来的（逐条可复算）</b><table>';
+      d.parts.forEach(x=>{
+        h+='<tr><td>'+x.k+'</td><td>'+(x.mul?x.v.toFixed(3)+' ×':(x.v>=0?'+':'')+x.v.toFixed(2))+'</td></tr>';
+        h+='<tr><td colspan="2" style="color:var(--sub);font-size:11px;padding:0 0 4px">↳ '+x.why+'</td></tr>';
+      });
+      h+='<tr class="fin"><td>= 有效分</td><td>'+d.score.toFixed(2)+'</td></tr></table></div>';
+
+      /* 为什么是它 */
+      h+='<div class="sec"><b>为什么是它（按你在意的点）</b><ul class="tight">';
+      d.detail.slice().sort((a,c)=>c.v-a.v).slice(0,4).forEach(x=>
+        h+='<li>'+x.label+'：'+x.v.toFixed(2)+' 分 <span style="color:var(--sub)">（来自「'+x.scene+'」）</span></li>');
+      h+='</ul></div>';
+
+      /* 补偿清单 */
+      if(d.compItems.length){
+        h+='<div class="sec"><b>短板补偿清单（田忌赛马：低成本把劣势补回来）</b><ul class="tight">';
+        d.compItems.slice(0,5).forEach(x=>
+          h+='<li>'+x.means+' → +'+x.gain.toFixed(2)+' 分，代价约 '+(x.cost*100).toFixed(0)+' 单位 <span style="color:var(--sub)">'+x.note+'</span></li>');
+        h+='</ul></div>';
+      }
+
+      /* 输出端 cap */
+      if(d.capItems.length){
+        h+='<div class="sec"><b>哪些钱是白花的（输出端天花板）</b><ul class="tight">';
+        d.capItems.slice(0,4).forEach(x=>
+          h+='<li>'+x.attr+'：机器有 '+x.actual.toFixed(2)+'，但「'+prof.oc.label+'」只承载 '+x.cap.toFixed(2)+
+             ' → 超出部分折损 '+x.loss.toFixed(2)+' 分</li>');
+        h+='</ul><div class="hint">'+prof.oc.note+'</div></div>';
+      }
+
+      /* 镜头搭配 */
+      const ls=lensesFor(b,q.lens_groups);
+      h+='<div class="sec"><b>镜头怎么配（原厂 / 副厂 / 国产都进来了）</b><ul class="tight">';
+      (ls.length?ls:DATA.lenses.filter(l=>l.mount.includes(b.mount)).slice(0,3)).forEach(l=>
+        h+='<li><span class="tag grey">'+l.brand_type+'</span> '+l.name+' · '+l.weight_g+'g · 示例 '+
+           (l.price?fmt(l.price):'套机含')+' · MTF 示例档 '+l.mtf_grade+
+           ' <span style="color:var(--sub)">— '+l.marginal_note+'</span></li>');
+      h+='</ul><div class="hint">MTF 档位为示例分级、非实测、未核实；真实选型须查实测 MTF 图。'+
+         '<br>预算分配（慢变档位，非实时）：机身档位 '+(d.priceTier?fmt(d.priceTier):'缺失')+
+         ' + 配件 '+fmt(p.accessories)+' → 留给镜头 '+fmt(Math.max(0,q.budget-(d.priceTier||finalOf(p))-p.accessories))+
+         '。上面按价格从低到高列了 4 颗，先看能同时买下几颗，别只看单颗。</div></div>';
+
+      /* 边际比 + 持有成本 */
+      h+='<div class="note"><b>边际收益：</b>性价比 '+d.valueRatio.toFixed(2)+' 分/千元。'+
+         (valid.length>1?'对比最便宜的可行方案，可看每多花一元买回多少有效分 —— 「成本 +80%、效果 +8%」的区间就该警惕。':'')+'</div>';
+      h+='<div class="note"><b>持有成本（不是买价）：</b>折旧约 '+fmt(d.holding.depreciation)+
+         (d.holding.resale?' + 未来出二手折价 '+fmt(d.holding.resale):'')+
+         (d.holding.offset?' − 第二用途抵扣 '+fmt(d.holding.offset):'')+
+         ' ≈ '+fmt(d.holding.net)+'。'+
+         (b.secondary_uses.length?'有第二用途，换机时不必变现，账面损失不落袋。':'无第二用途，换机多半要出二手。')+
+         ' <span style="color:var(--sub)">首发溢价与「冲首发亏更多」的参照系见下方价格观测。</span></div>';
+
+      /* 价格算式 */
+      h+='<div class="price"><b style="font-size:12px">到手价是一道理算式，不是查来的一个数</b><table>';
+      h+='<tr><td>机身挂牌价（示例）</td><td>'+fmt(p.list_price)+'</td></tr>';
+      if(p.coupon)h+='<tr><td>− 平台 / 店铺券</td><td>'+fmt(p.coupon)+'</td></tr>';
+      h+='<tr><td>− 国补</td><td>'+(p.subsidy?fmt(p.subsidy):'0')+'</td></tr>';
+      h+='<tr><td colspan="2" style="color:var(--sub);font-size:11px;padding:1px 0 5px">↳ '+p.subsidy_note+'</td></tr>';
+      if(p.trade_in)h+='<tr><td>− 以旧换新</td><td>'+fmt(p.trade_in)+'</td></tr>';
+      if(p.shipping)h+='<tr><td>+ 运费</td><td>'+fmt(p.shipping)+'</td></tr>';
+      h+='<tr><td><b>机身到手价</b></td><td>'+fmt(finalOf(p))+'</td></tr>';
+      h+='<tr><td>+ 镜头（'+p.lens_name+'）</td><td>'+fmt(p.lens)+'</td></tr>';
+      h+='<tr><td>+ 配件</td><td>'+fmt(p.accessories)+'</td></tr>';
+      h+='<tr class="total"><td>整套合计</td><td>'+fmt(d.kit)+'</td></tr></table>';
+      const ps=d.priceStatus,pl=d.priceLabel;
+      const badge=ps==="fresh"?'<span class="badge A">fresh</span>':
+                  ps==="stale"?'<span class="badge D">stale</span>':'<span class="badge C">unverified</span>';
+      h+='<div class="meta">观测日 '+p.observed_at+' ｜ 来源 '+p.origin+' ｜ 可信度 <b>'+p.confidence+
+         '</b> ｜ 价格状态 '+badge+' '+pl+
+         ' ｜ 决策用档位 '+(d.priceTier?fmt(d.priceTier):'缺失')+' ｜ 计算基准 '+d.priceBasisNote+
+         '<br><b>⚠️ 示例 / 非实时报价，禁止用于下单；本行数字只作展示，不参与排序</b>'+
+         (d.budgetWarning?'<br><b style="color:#b42318">⚠️ '+d.budgetWarning+'</b>':'')+'</div></div>';
+      h+='</div>';
+    });
+  }
+
+  /* 反例 / 口碑时间戳 */
+  h+='<div class="card"><h2>③ 口碑带时间戳：旧结论会自动降权、不会照抄</h2>'+
+     '<p class="desc">「曾经犯过错误」不等于「现在还在错」；名气也不等于专业度。以下来自 reputation.json，每条带 as_of / status / 利益标注。</p><ul class="tight">';
+  DATA.reputation.forEach(x=>{
+    const cls={"outdated":"D","disputed":"D","improved":"C","current":"A"}[x.status]||"C";
+    h+='<li><span class="badge '+cls+'">'+x.status+'</span> <b>'+x.claim+'</b> '+
+       '<span style="color:var(--sub)">['+x.source_type+' · '+x.bias+' · as_of '+x.as_of+'] '+x.note+'</span></li>';
+  });
+  h+='</ul><div class="note warn">来源按 <b>官方 / 权威媒体 / 消费者使用者 / 圈外 / 可复现实测</b> 五类交叉，'+
+     '任何一类都不独占结论；官方「王婆卖瓜」占比可高但不可全信，媒体与主播必须标利益关系，圈内视角要配圈外视角。</div></div>';
+
+  /* 价格观测 */
+  h+='<div class="card"><h2>④ 价格是时间序列，不是大促快照</h2>'+
+     '<p class="desc">用户口述：老机型仍在缓降，50-250 的最大降幅发生在 7/8 月，双 11 双 12 反而没什么变化 —— 只在 618/双 11 抓价会系统性漏掉真实低点。</p>';
+  DATA.price_history.forEach(s=>{
+    h+='<div class="sec"><b>'+s.item+'</b> <span class="tag warn">用户自述 / 未核实</span><ul class="tight">';
+    s.points.forEach(pt=>h+='<li>'+pt.date+'：'+(pt.price?fmt(pt.price):'—')+' · '+pt.event+'</li>');
+    h+='<li style="color:var(--sub)">'+s.lesson+(s.date_uncertainty?'（'+s.date_uncertainty+'）':'')+'</li></ul></div>';
+  });
+  h+='<div class="note">正式版由 <code>.github/workflows/update-prices.yml</code> <b>每日</b>采样并自动提交回仓库，'+
+     'Git 顺手留下一整条价格曲线；<b>软件本体一行不动</b>，改价 = 换一张 prices.json。'+
+     '亏损同时给「绝对折旧」与「相对参照系」（冲首发的人亏更多，所以不算十分肉疼）。</div></div>';
+
+  /* 形态边界 */
+  h+='<div class="card"><h2>⑤ 这一版是什么、不是什么</h2><ul class="tight">'+
+     '<li><b>是</b>：能双击就跑的离线成品，输入即算，逐条可复算，可一键导出给第二个模型挑错。</li>'+
+     '<li><b>不是</b>：实时报价系统。纯静态网页<b>不联网</b>，本页价格全是示例 / 举证 / 用户自述未核实。</li>'+
+     '<li><b>价格过期怎么规避</b>：预算硬过滤改用 <code>data/price_tiers.json</code> 的<b>慢变档位</b>（半年校准一次），'+
+     '会过期的到手价只作展示、不参与排序；每条价格按 <code>freshness_policy.json</code> 的 TTL 运行期判 '+
+     '<b>fresh / stale / unverified</b>，非 fresh 一律标红且性价比/持有成本改用档位算。'+
+     '刷新通道三条：skill 联网查、GitHub Actions 每日抓价、用户报价格 issue。详见 <code>PRICE_FRESHNESS.md</code>。</li>'+
+     '<li><b>真联网</b>由 <code>07_camera-advisor-skill</code> 完成：AI 查实时到手价、复核口碑时间戳、按五类来源交叉，再调同一套引擎。</li>'+
+     '<li><b>要给别人用</b>：<code>12_camera-advisor-repo/</code> 可直接推到 GitHub，clone 下来打开 app/index.html 即可；网站部署 / 小程序路径见 docs/形态与部署.md。</li>'+
+     '</ul></div>';
+
+  document.getElementById("output").innerHTML=h;
+  document.getElementById("exportCard").style.display="block";
+  document.getElementById("exportText").value=buildExport(q,top,all,prof);
+  window.scrollTo({top:document.getElementById("output").offsetTop-18,behavior:"smooth"});
+}
+
+function buildExport(q,top,all,prof){
+  const L=[];
+  L.push("【相机选购顾问 v2 · 一次完整记录，请其他 AI 逐条核验】");
+  L.push("生成日期：2026-11-26（v3）｜ 数据性质：示例 / 举证 / 用户自述未核实，非实时报价");
+  const fs=freshnessSummary();
+  L.push("价格新鲜度：fresh "+fs.fresh+" / stale "+fs.stale+" / unverified "+fs.unverified+
+         " ｜ 观测基准日 "+fs.asOf+(fs.allStale?" ｜ 全部非 fresh：本结果仅为规则排序，不含任何实时到手价结论":""));
+  L.push("预算硬过滤使用 data/price_tiers.json 的慢变档位，不使用会过期的到手价；非 fresh 价格不参与性价比与持有成本。");
+  L.push("");
+  L.push("一、我的输入（全量）");
+  L.push("预算："+q.budget+" 元（含机身+镜头+配件）｜ 画幅："+q.sensor+" ｜ 国补资格："+q.region);
+  L.push("现有装备："+q.current_gear+" ｜ 可复用配件："+q.existing_kit);
+  L.push("痛点："+q.pains.join(",")+" ｜ 稀缺约束："+q.constraints.join(","));
+  L.push("徒步距离："+q.trek_km+"km ｜ 手型："+q.hand_size+" ｜ 身高："+q.height_cm+"cm ｜ 筋膜炎顾虑："+q.tendinitis);
+  L.push("购买/持有偏好："+q.finance.join(","));
+  L.push("输出端："+DATA.rules.output_caps[q.output_target].label+" ｜ 熟悉程度："+q.expertise);
+  L.push("补偿能力："+q.abilities.join(",")+" ｜ 社交权重："+q.social_weight);
+  L.push("场景："+q.scenes.join(",")+" ｜ 特别在意："+q.priorities.join(",")+" ｜ 镜头范围："+q.lens_groups.join(","));
+  L.push("");
+  L.push("二、引擎办法（透明，可复算）");
+  L.push("M1 硬过滤：整套价>预算 / 画幅 / 二手偏好 / 徒步≥15km且整套>900g 一票否决 / 超负重上限");
+  L.push("M2 裸分=场景属性×权重+特别在意；M2b 补偿=短板×手段增益−后期时间与器材代价(P5)");
+  L.push("M3 输出端 cap：超过输出端承载的属性折损(P6)；M4 携带意愿=乘性出勤率因子(P7)");
+  L.push("M5 边际性价比=有效分/千元；M6 持有成本=折旧+二手折价−第二用途抵扣(P8)");
+  L.push("M7 品牌加分须过口碑 as_of/status 检查，社交认同为用户可调显式维度(P9/P10)");
+  L.push("M8 输出用户画像，按主要矛盾/次要矛盾/不必纠结分段(P11)");
+  L.push("");
+  L.push("三、用户画像");
+  L.push("主要矛盾："+prof.main.join("；"));
+  L.push("次要矛盾："+prof.sec.join("；"));
+  L.push("不必纠结："+prof.skip.join("；"));
+  L.push("是否建议增加独立设备："+(prof.shouldAdd?"是":"否"));
+  L.push("");
+  L.push("四、推荐结果");
+  if(!top.length)L.push("无可行方案（示例库按当前条件被全部硬过滤）");
+  top.forEach((d,i)=>{
+    L.push("第"+(i+1)+"名 "+d.name+" 有效分 "+d.score.toFixed(2)+" ｜ 整套示例价 "+d.kit+" 元");
+    d.parts.forEach(x=>L.push("  · "+x.k+" "+(x.mul?"×":"")+x.v.toFixed(3)+" — "+x.why));
+    L.push("  补偿："+d.compItems.map(x=>x.means+"(+"+x.gain.toFixed(2)+")").join("；")||"无");
+    L.push("  输出端折损："+d.capItems.map(x=>x.attr+" "+x.loss.toFixed(2)).join("；")||"无");
+    L.push("  持有成本净额："+d.holding.net+" 元 ｜ 性价比 "+d.valueRatio.toFixed(2)+" 分/千元");
+    L.push("  观测日 "+d.b.price.observed_at+" ｜ 来源 "+d.b.price.origin+" ｜ 可信度 "+d.b.price.confidence+
+           " ｜ 价格状态 "+d.priceStatus+"（"+d.priceLabel+"）｜ 决策档位 "+d.priceTier+" ｜ 计算基准 "+d.priceBasisNote);
+  });
+  L.push("");
+  L.push("五、请你重点核验（我自己承认可能错的地方）");
+  L.push("1. 「总结烂了的推荐逻辑会过时」——请独立查证 22/23 与 25/26 手机 CMOS 尺寸选择是否确有转向，以及可变光圈/一镜双目/RYYB/计算摄影的说法。用户口述，我未独立核实。");
+  L.push("2. 用户自述的 Z30 与 50-250 价格点、时间线（含明显口误），我未核实，只当结构样例；请核对，查不到就写查不到。");
+  L.push("3. 镜头 MTF 示例档、整机重量、social_perception 均为示例归纳，非实测；请检查我有没有把示例写成结论。");
+  L.push("4. 补偿增益 gain、输出端 cap、携带意愿因子、第二用途抵扣都是我拍的系数，缺乏实证标定 —— 请评估量纲与合理性，指出过拟合风险。");
+  L.push("5. 口碑五分类与 outdated/improved 判定是否仍带偏见？官方占比 0.35、实测 0.40 合理吗？");
+  L.push("6. 本页全部价格示例或过期时点价，请勿当作当前报价；检查我有没有把「券后价」误叫成「到手价」。");
+  L.push("7. 静态网页不联网这件事我如实标注了；请判断这是否足以称为「成品」，还是仍停留在构思。");
+  L.push("");
+  L.push("六、出处与未核实留白");
+  L.push("v1 已核实的 42 条来源、佳能保修条款、cheapest-full-frame 页面见 09_来源与核实记录.md 与 01 档案第 6 节。");
+  L.push("本轮新增的用户口述内容一律标「用户自述 / 未核实」，不冒充事实。");
+  L.push("");
+  L.push("请逐条给：核验结果 / 你查到的网址与日期 / 对不对得上 / 新发现的错误 / 一句话总评。查不到就写查不到，不要凭记忆补答案。");
+  return L.join("\n");
+}
+function copyExport(){
+  const t=document.getElementById("exportText");t.select();document.execCommand("copy");
+  document.getElementById("copyHint").textContent="已复制，去粘给另一个 AI 吧。";
+}
+window.addEventListener("DOMContentLoaded",initPriceBanner);
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+name: 每周口碑复核（自我革命）
+
+# 「曾经犯过错误」不等于「现在还在错」；到期不复核 = 教条主义。
+# 本任务把 review_due 已到 / status=disputed 的条目列出来，自动开一个复核 issue。
+on:
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 扫描待复核条目并生成报告
+        run: |
+          python - > review.md <<'PY'
+          import json, datetime, os
+          with open("data/reputation.json", encoding="utf-8") as f:
+              rep = json.load(f)["reputation"]
+          today = datetime.date.today().isoformat()
+          due = [r for r in rep if r.get("review_due", "9999") <= today or r["status"] == "disputed"]
+          print("## 本周口碑复核清单\n")
+          print("复核日期：" + today + " ｜ 待复核 " + str(len(due)) + " 条\n")
+          print("规则：`outdated` / `disputed` 权重必须为 0；`improved` 只能低权重；")
+          print("`current` 必须有可点开的来源。**不要**因为品牌早年出过问题就判它现在不行。\n")
+          if not due:
+              print("本周无到期条目。")
+          else:
+              print("| id | 说法 | 当前状态 | 到期日 | 来源类型 | 利益标注 |")
+              print("|---|---|---|---|---|---|")
+              for r in due:
+                  print("| %s | %s | %s | %s | %s | %s |" % (
+                      r["id"], r["claim"], r["status"], r.get("review_due", "-"),
+                      r["source_type"], r["bias"]))
+              print("\n请逐条：查 ≥2 个独立来源（尽量跨官方 / 媒体 / 消费者 / 圈外 / 实测五类），")
+              print("把结论与 URL + 访问日期写回 `data/reputation.json`，更新 `as_of` 与 `review_due`。")
+              print("查不到就保持 `disputed`，**绝不许改成确定结论**。")
+          PY
+          cat review.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 有待复核条目就自动开 issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if grep -q "待复核 [1-9]" review.md; then
+            gh issue create \
+              --title "口碑复核 $(date -u +%Y-%m-%d)：有条目到期或存疑" \
+              --body-file review.md
+          else
+            echo "本周无到期条目，不开 issue。"
+          fi

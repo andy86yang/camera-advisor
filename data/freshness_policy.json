@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-11-26",
+  "default_ttl_days": 7,
+  "ttl_days_by_type": {
+    "final_price": 7,
+    "used_ask": 3,
+    "used_sold": 7,
+    "trade_in_quote": 3,
+    "coupon_price": 2,
+    "list_price": 30,
+    "msrp": 180
+  },
+  "trusted_confidence": [
+    "verified"
+  ],
+  "status_def": {
+    "fresh": "观测日在 TTL 内且 confidence=verified → 可展示到手价，仍须带观测日与来源",
+    "stale": "观测日超 TTL → 禁止给到手价结论；排序与性价比改用慢变档位；界面标红「已过期 N 天」",
+    "unverified": "无有效观测日 / 无来源 / confidence 非 verified → 禁止给到手价结论；改用慢变档位；界面标「未核实」"
+  },
+  "hard_filter_uses": "tier（data/price_tiers.json）",
+  "display_uses": "spot（data/prices.json 的 observations / bodies.json 内嵌 price）",
+  "on_all_stale": "当所有候选价格都不是 fresh，引擎在输出顶部打印：本结果仅为规则排序，不含任何实时到手价结论，请联网复核。",
+  "answer_to": "用户 2026-11-26 提问：静态网页不能实时联网，价格不就是错的吗？怎么规避？",
+  "answer": "不假装实时。三层：① 决策链只用慢变档位 tier，会过期的 spot 不参与预算硬过滤与排序；② 每条 spot 自带 observed_at + TTL，运行期算 freshness，过期/未核实强制降级并标红；③ 三条更新通道把 spot 刷新回来：skill 运行时联网查、GitHub Actions 每日抓价、用户报价格 issue。这样「价格错了」不会导致「推荐错了」，只会导致「标出来的数字被显式标为不可信」。"
+}

@@ -1,0 +1,576 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-11-25",
+  "notice": "⚠️ 本文件全部为示例 / 举证用数据，不是实时真实报价，禁止用于下单。上线前必须由 GitHub Actions 采集脚本覆盖。",
+  "contract_doc": "03_价格数据契约.md",
+  "four_tuple_required": [
+    "region",
+    "observed_at",
+    "price_type",
+    "condition_bucket"
+  ],
+  "observations": [
+    {
+      "observation_id": "demo_canon_r8",
+      "model_id": "canon_r8",
+      "mount": "RF",
+      "price_type": "final_price",
+      "amount": 9599,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [
+        "platform_coupon"
+      ],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "单价超过当期国补上限（口径待核实），本例按 0 处理"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "演示占位，未核实",
+      "source_year": "2026",
+      "verified_by": "unverified",
+      "verified_at": "2026-11-25",
+      "confidence": "unverified",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 9999,
+        "coupon": 400,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 9599,
+        "lens": 1599,
+        "lens_name": "RF 50mm F1.8 STM",
+        "accessories": 500,
+        "kit_total": 11698
+      }
+    },
+    {
+      "observation_id": "demo_canon_r7",
+      "model_id": "canon_r7",
+      "mount": "RF",
+      "price_type": "final_price",
+      "amount": 8199,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [
+        "platform_coupon"
+      ],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "同上，口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "演示占位，未核实",
+      "source_year": "2026",
+      "verified_by": "unverified",
+      "verified_at": "2026-11-25",
+      "confidence": "unverified",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 8599,
+        "coupon": 400,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 8199,
+        "lens": 1999,
+        "lens_name": "RF-S 18-150mm",
+        "accessories": 500,
+        "kit_total": 10698
+      }
+    },
+    {
+      "observation_id": "demo_sony_a6700",
+      "model_id": "sony_a6700",
+      "mount": "E",
+      "price_type": "final_price",
+      "amount": 8899,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [
+        "platform_coupon"
+      ],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "同上，口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "演示占位，未核实",
+      "source_year": "2026",
+      "verified_by": "unverified",
+      "verified_at": "2026-11-25",
+      "confidence": "unverified",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 9199,
+        "coupon": 300,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 8899,
+        "lens": 2299,
+        "lens_name": "E 16-55mm F2.8 或适马定焦",
+        "accessories": 500,
+        "kit_total": 11698
+      }
+    },
+    {
+      "observation_id": "demo_sony_a7c2",
+      "model_id": "sony_a7c2",
+      "mount": "E",
+      "price_type": "final_price",
+      "amount": 8091,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [
+        "national_subsidy"
+      ],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 908,
+        "reasons": [
+          "S20 举证数字：2026 双 11 到手 8091.15 元（含 15% 国补 + 直播间 600 券）。⚠️ 与「单价超 6000 不参与国补」来源冲突，口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-11",
+      "source_url": null,
+      "source_title": "S20 举证数字（2026 双 11 时点价，已过期）",
+      "source_year": "2026",
+      "verified_by": "subagent_search",
+      "verified_at": "2026-11-25",
+      "confidence": "reported",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 8999,
+        "coupon": 0,
+        "subsidy": 908,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 8091,
+        "lens": 1999,
+        "lens_name": "FE 28-60mm 或 FE 50mm F1.8",
+        "accessories": 500,
+        "kit_total": 10590
+      }
+    },
+    {
+      "observation_id": "demo_nikon_z5ii",
+      "model_id": "nikon_z5ii",
+      "mount": "Z",
+      "price_type": "final_price",
+      "amount": 7900,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [
+        "national_subsidy"
+      ],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 2099,
+        "reasons": [
+          "S21：发布定价 9999 元，2026 双 11 国补到手约 7900 元。⚠️ 国补口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-11",
+      "source_url": null,
+      "source_title": "S21 举证数字（2026 双 11 时点价，已过期）",
+      "source_year": "2026",
+      "verified_by": "subagent_search",
+      "verified_at": "2026-11-25",
+      "confidence": "reported",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 9999,
+        "coupon": 0,
+        "subsidy": 2099,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 7900,
+        "lens": 1799,
+        "lens_name": "NIKKOR Z 40mm f/2",
+        "accessories": 500,
+        "kit_total": 10199
+      }
+    },
+    {
+      "observation_id": "demo_nikon_d750",
+      "model_id": "nikon_d750",
+      "mount": "F",
+      "price_type": "used_ask",
+      "amount": 3550,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "used_platform",
+      "condition_raw": "99新（示例）",
+      "condition_bucket": "good",
+      "warranty_status": "store_only",
+      "includes": [],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 50,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "二手不参与国补"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "S7/S8/S9 二手区间举证（已过期，成色/快门数未定）",
+      "source_year": "2026",
+      "verified_by": "subagent_search",
+      "verified_at": "2026-11-25",
+      "confidence": "reported",
+      "stale_after_days": 3,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 3500,
+        "coupon": 0,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 50,
+        "body_final": 3550,
+        "lens": 1200,
+        "lens_name": "AF-S 50mm F1.8G（二手）",
+        "accessories": 500,
+        "kit_total": 5250
+      }
+    },
+    {
+      "observation_id": "demo_fuji_xt5",
+      "model_id": "fuji_xt5",
+      "mount": "X",
+      "price_type": "final_price",
+      "amount": 11990,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "同上，口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "演示占位，未核实",
+      "source_year": "2026",
+      "verified_by": "unverified",
+      "verified_at": "2026-11-25",
+      "confidence": "unverified",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 11990,
+        "coupon": 0,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 11990,
+        "lens": 2990,
+        "lens_name": "XF 23mm F2 或 XF 35mm F1.4",
+        "accessories": 500,
+        "kit_total": 15480
+      }
+    },
+    {
+      "observation_id": "demo_fuji_x100vi",
+      "model_id": "fuji_x100vi",
+      "mount": "固定镜头",
+      "price_type": "final_price",
+      "amount": 11390,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "S32/S33：国内双 11「9000 出头」跌破首发价，美国二手反而 $1,768–$2,289 高于 MSRP。四组数字冲突，禁止直接换算"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-22",
+      "source_url": null,
+      "source_title": "S32/S33 举证（时点价，已过期，地域冲突未调和）",
+      "source_year": "2026",
+      "verified_by": "subagent_search",
+      "verified_at": "2026-11-25",
+      "confidence": "reported",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 11390,
+        "coupon": 0,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 11390,
+        "lens": 0,
+        "lens_name": "固定镜头，无需另购",
+        "accessories": 500,
+        "kit_total": 11890
+      }
+    },
+    {
+      "observation_id": "demo_lumix_s5ii",
+      "model_id": "lumix_s5ii",
+      "mount": "L",
+      "price_type": "final_price",
+      "amount": 10599,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [
+        "platform_coupon"
+      ],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "同上，口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "演示占位，未核实",
+      "source_year": "2026",
+      "verified_by": "unverified",
+      "verified_at": "2026-11-25",
+      "confidence": "unverified",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 10999,
+        "coupon": 400,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 10599,
+        "lens": 2499,
+        "lens_name": "Lumix S 50mm F1.8",
+        "accessories": 500,
+        "kit_total": 13598
+      }
+    },
+    {
+      "observation_id": "demo_lumix_gh7",
+      "model_id": "lumix_gh7",
+      "mount": "M43",
+      "price_type": "final_price",
+      "amount": 12999,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "同上，口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "演示占位，未核实",
+      "source_year": "2026",
+      "verified_by": "unverified",
+      "verified_at": "2026-11-25",
+      "confidence": "unverified",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 12999,
+        "coupon": 0,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 12999,
+        "lens": 2999,
+        "lens_name": "M43 12-35mm F2.8",
+        "accessories": 500,
+        "kit_total": 16498
+      }
+    },
+    {
+      "observation_id": "demo_om1ii",
+      "model_id": "om1ii",
+      "mount": "M43",
+      "price_type": "final_price",
+      "amount": 13999,
+      "currency": "CNY",
+      "region": "CN",
+      "channel": "official_cn",
+      "condition_raw": "全新",
+      "condition_bucket": "mint",
+      "warranty_status": "official_cn",
+      "includes": [],
+      "excludes": [
+        "shipping",
+        "cashback_e_card"
+      ],
+      "shipping": 0,
+      "subsidy_eligibility": {
+        "eligible": false,
+        "amount": 0,
+        "reasons": [
+          "同上，口径待核实"
+        ],
+        "policy_version": "unverified_2026_11",
+        "policy_url": null,
+        "checked_at": "2026-11-25"
+      },
+      "observed_at": "2026-11-25",
+      "source_url": null,
+      "source_title": "演示占位，未核实",
+      "source_year": "2026",
+      "verified_by": "unverified",
+      "verified_at": "2026-11-25",
+      "confidence": "unverified",
+      "stale_after_days": 7,
+      "note": "演示用：source_url 为空表示无真实出处，界面必须显示「未核实」。正式版由采集脚本覆盖本文件。",
+      "demo_breakdown": {
+        "list_price": 13999,
+        "coupon": 0,
+        "subsidy": 0,
+        "trade_in": 0,
+        "shipping": 0,
+        "body_final": 13999,
+        "lens": 3999,
+        "lens_name": "M.Zuiko 100-400mm 或 12-40mm PRO",
+        "accessories": 500,
+        "kit_total": 18498
+      }
+    }
+  ]
+}
